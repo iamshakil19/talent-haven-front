@@ -1,8 +1,11 @@
 import React from "react";
 import LoginForm from "./LoginForm";
 import { LoginConfig } from "./Login.config";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
+  const location = useLocation();
+
   return (
     <>
       <div className="mb-8">
