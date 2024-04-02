@@ -1,11 +1,16 @@
-import React from "react";
-import Hero from "./components/Hero/Hero";
+import FeaturedJobs from "./components/FeaturedJobs";
+import Hero from "./components/Hero";
+import PopularCategories from "./components/PopularCategories";
+import Testimonials from "./components/Testimonials";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Hero />
-    </div>
+      <PopularCategories />
+      <FeaturedJobs />
+      <Testimonials />
+    </>
   );
 };
 
