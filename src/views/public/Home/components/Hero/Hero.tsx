@@ -4,6 +4,7 @@ import { TfiEmail } from "react-icons/tfi";
 import { PiBagSimpleLight } from "react-icons/pi";
 import { FaCheckCircle } from "react-icons/fa";
 import { config } from "./Hero.config";
+import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
@@ -13,18 +14,18 @@ const Hero = () => {
     >
       <div className="flex-1 flex justify-center lg:justify-end">
         <div className="w-full lg:max-w-3xl">
-          <h1 className="font-semibold text-3xl lg:text-5xl max-w-2xl leading-loose tracking-wider">
+          <h1 className="font-semibold text-3xl lg:text-5xl max-w-2xl tracking-wide !leading-snug">
             {config.STATIC_TEXT.HEADING_PART_1}{" "}
-            <span className="text-primary-600">
-              {config.STATIC_TEXT.HEADING_PART_2}
-            </span>{" "}
+            <span className="text-primary">
+              {config.STATIC_TEXT.HEADING_PART_2}{" "}
+            </span>
             {config.STATIC_TEXT.HEADING_PART_3}
           </h1>
           <p className="text-sm my-10 text-gray-500">
             {config.STATIC_TEXT.SUB_HEADING}
           </p>
 
-          <form className="lg:bg-white lg:px-10 w-full py-7 rounded-md lg:shadow-sm flex flex-col lg:flex-row justify-between gap-5">
+          <form className="lg:bg-white lg:px-8 w-full py-6 rounded-lg lg:shadow-sm flex flex-col lg:flex-row justify-between gap-5">
             <div className="flex gap-1 items-center w-full bg-white py-3 px-5 lg:p-0 rounded-md shadow-sm lg:shadow-none">
               <GrSearch className="text-gray-500 text-2xl" />
               <input
@@ -46,9 +47,9 @@ const Hero = () => {
             </div>
 
             <div className="w-full lg:w-fit mt-5 lg:mt-0">
-              <button className="bg-primary-500 hover:bg-primary-600 transition-all duration-200 text-white whitespace-nowrap px-5 py-4 lg:py-3 rounded-md w-full text-lg font-medium">
+              <Button className="h-12 w-full">
                 {config.STATIC_TEXT.FIND_JOBS_BTN_TEXT}
-              </button>
+              </Button>
             </div>
           </form>
           <div>
@@ -57,7 +58,9 @@ const Hero = () => {
                 {config.STATIC_TEXT.POPULAR_SEARCHES_TEXT}
               </span>
               {config.STATIC_TEXT.POPULAR_SEARCH_DATA?.map((item, index) => (
-                <span key={index}>{item}</span>
+                <span className="cursor-pointer" key={index}>
+                  {item}
+                </span>
               ))}
             </p>
           </div>

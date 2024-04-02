@@ -8,6 +8,7 @@ import Home from "../views/public/Home/Home";
 import { routePaths } from "./all.routes";
 import AuthLayout from "../components/layout/AuthLayout";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import About from "../views/public/About";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },

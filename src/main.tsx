@@ -9,8 +9,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Suspense
       fallback={
-        <div className="flex justify-center items-center flex-auto flex-col h-[100vh] bg-blue-300">
-          <p>Loading...</p>
+        <div className="flex justify-center items-center flex-auto flex-col h-[100vh] bg-primary">
+          <p className="text-primary-foreground">Loading...</p>
         </div>
       }
     >
