@@ -1,19 +1,18 @@
-
 import { z } from "zod";
 
 interface IStaticText {
   HEADING: string;
   SUB_HEADING: string;
-  SUBMIT: string;
+  SUBMIT_BTN_TEXT: string;
 }
 
 const STATIC_TEXT: IStaticText = {
-  HEADING: "Welcome back!",
-  SUB_HEADING: "Please enter your credentials to sign in!",
-  SUBMIT: "Submit",
+  HEADING: "Login",
+  SUB_HEADING: "Enter your email below to login to your account",
+  SUBMIT_BTN_TEXT: "Login",
 };
 
-const LOGIN_SCHEMA = z.object({
+const FORM_SCHEMA = z.object({
   email: z
     .string({ required_error: "email is required" })
     .min(1, { message: "Email is required" })
@@ -25,15 +24,14 @@ const LOGIN_SCHEMA = z.object({
   rememberMe: z.boolean().optional(),
 });
 
-export const LOGIN_DEFAULT_VALUE = {
+export const FORM_DEFAULT_VALUE = {
   email: "",
   password: "",
   rememberMe: true,
 };
 
-
 export const LoginConfig = {
   STATIC_TEXT,
-  LOGIN_SCHEMA,
-  LOGIN_DEFAULT_VALUE,
+  FORM_SCHEMA,
+  FORM_DEFAULT_VALUE,
 };
