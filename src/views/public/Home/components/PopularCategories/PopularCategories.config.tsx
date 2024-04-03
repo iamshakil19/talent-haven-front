@@ -34,19 +34,19 @@ const PopularJobCategories: IPopularJobCategory[] = [
     icon: <LiaBullhornSolid />,
   },
   {
-    id: "4",
+    id: "5",
     title: "Customer Service",
     subtitle: "2",
     icon: <LiaBullhornSolid />,
   },
   {
-    id: "5",
+    id: "6",
     title: "Project Management",
     subtitle: "92",
     icon: <LiaBullhornSolid />,
   },
   {
-    id: "6",
+    id: "7",
     title: "Accounting",
     subtitle: "2",
     icon: <LiaBullhornSolid />,

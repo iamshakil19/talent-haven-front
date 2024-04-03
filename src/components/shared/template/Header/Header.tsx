@@ -57,10 +57,9 @@ const Header = () => {
               </Link>
             </div>
             <nav className="grid gap-3 text-lg font-medium">
-              {headerItems.map((item) => (
-                <SheetClose asChild>
+              {headerItems?.map((item) => (
+                <SheetClose key={item.id} asChild>
                   <Link
-                    key={item.id}
                     to={item.path}
                     className={`flex text-muted-foreground py-1.5 px-3 rounded-md ${
                       location.pathname === item.path
