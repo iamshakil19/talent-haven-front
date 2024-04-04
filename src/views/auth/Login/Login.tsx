@@ -71,11 +71,11 @@ const Login = () => {
         <div className="flex items-center justify-center py-12 col-span-3 px-5">
           <AnimatedPageWrapper>
             <div className="mx-auto grid gap-6 w-full max-w-md mt-14 lg:mt-0 lg:border p-10 rounded-md lg:bg-white lg:shadow-md shadow-gray-200">
-              <div className="grid gap-2 text-center">
+              <div className="grid gap-2 ">
                 <h1 className="text-3xl font-bold text-primary">
                   {LoginConfig.STATIC_TEXT.HEADING}
                 </h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-muted-foreground text-wrap">
                   {LoginConfig.STATIC_TEXT.SUB_HEADING}
                 </p>
               </div>
@@ -93,6 +93,7 @@ const Login = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
+                          className="h-12"
                             placeholder="Type your email"
                             type="email"
                             {...field}
@@ -112,7 +113,7 @@ const Login = () => {
                         <FormControl>
                           <>
                             <Input
-                              className="pr-10"
+                              className="pr-10 h-12"
                               placeholder="Type your password"
                               type={passwordToggle ? "text" : "password"}
                               {...field}

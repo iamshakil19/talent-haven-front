@@ -10,6 +10,7 @@ import useScrollPosition from "@/utils/useScrollPosition";
 import { TfiMenu } from "react-icons/tfi";
 import headerItems from "@/constants/header.constants";
 import { LiaUser } from "react-icons/lia";
+import { Menu } from "lucide-react";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
@@ -39,9 +40,15 @@ const Header = () => {
         {/* Mobile Sidebar */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="shrink-0 md:hidden">
-              <TfiMenu className="text-3xl" />
-            </Button>
+            <div className="flex-1">
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden "
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </div>
           </SheetTrigger>
           <SheetContent side="left">
             <div className="mb-10">
@@ -63,8 +70,8 @@ const Header = () => {
                     to={item.path}
                     className={`flex text-muted-foreground py-1.5 px-3 rounded-md ${
                       location.pathname === item.path
-                        ? "font-semibold text-primary-foreground bg-primary/90"
-                        : "hover:text-primary/80 hover:bg-primary/20"
+                        ? "text-foreground bg-primary/15"
+                        : "hover:bg-primary/10"
                     }`}
                   >
                     <div className="flex gap-3">
@@ -82,7 +89,7 @@ const Header = () => {
           </SheetContent>
         </Sheet>
 
-        <div>
+        <div className="flex-1 flex justify-center">
           <Link to="/">
             <img
               src="/logo.svg"
@@ -94,7 +101,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Header */}
-        <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-5">
+        <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-5 flex-1 justify-end">
           <div className="gap-10 hidden md:flex">
             {headerItems.map((item) => (
               <Link
@@ -110,6 +117,7 @@ const Header = () => {
               </Link>
             ))}
           </div>
+
           <div>
             <Link to="/login" className="hidden md:block ml-14">
               <Button variant={"outline"}>Login / Register</Button>

@@ -51,6 +51,28 @@
   .heading-text {
     @apply text-gray-700;
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #7c3aedc7;
+    border-radius: 9999999px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+  }
+
 }
 
 @layer base {

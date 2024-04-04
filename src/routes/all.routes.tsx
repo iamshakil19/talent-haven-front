@@ -5,6 +5,7 @@ import Profile from "../views/common/Profile";
 
 export const routePaths = [
   {
+    key: "dashboard",
     name: "Dashboard",
     path: "/dashboard",
     element: <Dashboard />,
