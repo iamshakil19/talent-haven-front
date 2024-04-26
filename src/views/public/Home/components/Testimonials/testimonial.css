@@ -1,0 +1,16 @@
+.react-multi-carousel-dot-list {
+  bottom: -5px !important;
+}
+
+.react-multi-carousel-dot button {
+  background: #c2c3c4 !important;
+  border: #c2c3c4;
+  transition: all 0.5s !important;
+}
+
+.react-multi-carousel-dot--active button {
+  background: #7c3aed !important;
+  width: 30px !important;
+  border-radius: 8px !important;
+  border: #7c3aed !important;
+}

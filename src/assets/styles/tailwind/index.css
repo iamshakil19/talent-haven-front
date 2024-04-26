@@ -72,7 +72,6 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #7c3aed;
   }
-
 }
 
 @layer base {
@@ -87,9 +86,18 @@
     --popover-foreground: 224 71.4% 4.1%; /*  #030712 */
 
     --primary: 262.1 83.3% 57.8%; /*  #7C3AED */
+    --primary-blue: 215, 79%, 46%; /*  #1967D2 */
+    --primary-red: 0, 100%, 50%; /*  #FF0000 */
+    --primary-orange: 29, 93%, 68%; /*  #F9AA61 */
+    --primary-green: 136, 53%, 43%; /*  #34A853 */
+    --primary-gray: 220 8.9% 46.1%; /*  #6B7280 */
     --primary-foreground: 210 20% 98%; /*  #F9FAFB */
 
     --secondary: 220 14.3% 95.9%; /*  #F3F4F6 */
+    --secondary-blue: 215, 70%, 95%; /*  #E8F0FB */
+    --secondary-red: 3, 69%, 95%; /*  #FBEAE9 */
+    --secondary-orange: 38, 92%, 95%; /*  #FEF6E8 */
+    --secondary-green: 136, 38%, 94%; /* #EBF6EE */
     --secondary-foreground: 220.9 39.3% 11%; /*  #111827 */
 
     --muted: 220 14.3% 95.9%; /*  #F3F4F6 */
@@ -118,6 +126,7 @@
     --popover-foreground: 210 20% 98%;
 
     --primary: 263.4 70% 50.4%;
+    --primary-blue: 215, 79%, 46%;
     --primary-foreground: 210 20% 98%;
 
     --secondary: 215 27.9% 16.9%;

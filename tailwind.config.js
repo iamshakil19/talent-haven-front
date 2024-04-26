@@ -31,10 +31,19 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          blue: "hsl(var(--primary-blue))",
+          red: "hsl(var(--primary-red))",
+          orange: "hsl(var(--primary-orange))",
+          green: "hsl(var(--primary-green))",
+          gray: "hsl(var(--primary-gray))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          blue: "hsl(var(--secondary-blue))",
+          red: "hsl(var(--secondary-red))",
+          orange: "hsl(var(--secondary-orange))",
+          green: "hsl(var(--secondary-green))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {

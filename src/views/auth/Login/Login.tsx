@@ -93,7 +93,7 @@ const Login = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                          className="h-12"
+                            className="h-12"
                             placeholder="Type your email"
                             type="email"
                             {...field}
