@@ -53,4 +53,12 @@ const PopularJobCategories: IPopularJobCategory[] = [
   },
 ];
 
-export default PopularJobCategories;
+const staticText = {
+  title: "Popular Job Categories",
+  subTitle: "2036 jobs live - 293 added today.",
+};
+
+export const config = {
+  staticText,
+  PopularJobCategories,
+};

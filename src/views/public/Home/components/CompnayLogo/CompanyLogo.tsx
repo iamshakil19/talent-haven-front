@@ -6,22 +6,20 @@ import CompanyLogoCard from "./CompanyLogoCard";
 
 const CompanyLogo = () => {
   return (
-    <Container>
-      <div className="my-16">
-        <Carousel
-          responsive={config.responsive}
-          draggable={true}
-          infinite={true}
-          autoPlay={false}
-          autoPlaySpeed={3000}
-          arrows={false}
-          swipeable={true}
-        >
-          {config.companyLogoData?.map((item) => (
-            <CompanyLogoCard key={item.id} data={item} />
-          ))}
-        </Carousel>
-      </div>
+    <Container className="my-16">
+      <Carousel
+        responsive={config.responsive}
+        draggable={true}
+        infinite={true}
+        autoPlay={false}
+        autoPlaySpeed={3000}
+        arrows={false}
+        swipeable={true}
+      >
+        {config.companyLogoData?.map((item) => (
+          <CompanyLogoCard key={item.id} data={item} />
+        ))}
+      </Carousel>
     </Container>
   );
 };

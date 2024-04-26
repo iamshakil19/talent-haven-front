@@ -3,6 +3,7 @@ import FeaturedJobs from "./components/FeaturedJobs";
 import Hero from "./components/Hero";
 import JobOpportunity from "./components/JobOpportunity";
 import PopularCategories from "./components/PopularCategories";
+import RecentArticle from "./components/RecentArticle";
 import Testimonials from "./components/Testimonials";
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       <Testimonials />
       <CompanyLogo />
       <JobOpportunity />
+      <RecentArticle />
     </>
   );
 };
