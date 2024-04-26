@@ -1,5 +1,7 @@
+import CompanyLogo from "./components/CompnayLogo";
 import FeaturedJobs from "./components/FeaturedJobs";
 import Hero from "./components/Hero";
+import JobOpportunity from "./components/JobOpportunity";
 import PopularCategories from "./components/PopularCategories";
 import Testimonials from "./components/Testimonials";
 
@@ -10,6 +12,8 @@ const Home = () => {
       <PopularCategories />
       <FeaturedJobs />
       <Testimonials />
+      <CompanyLogo />
+      <JobOpportunity />
     </>
   );
 };
