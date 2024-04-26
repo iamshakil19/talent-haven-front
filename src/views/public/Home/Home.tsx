@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import JobOpportunity from "./components/JobOpportunity";
 import PopularCategories from "./components/PopularCategories";
 import RecentArticle from "./components/RecentArticle";
+import Recruit from "./components/Recruit";
 import Testimonials from "./components/Testimonials";
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
       <JobOpportunity />
       <RecentArticle />
       <Application />
+      <Recruit />
     </>
   );
 };
