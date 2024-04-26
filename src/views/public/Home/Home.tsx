@@ -1,3 +1,4 @@
+import Application from "./components/Application";
 import CompanyLogo from "./components/CompnayLogo";
 import FeaturedJobs from "./components/FeaturedJobs";
 import Hero from "./components/Hero";
@@ -16,6 +17,7 @@ const Home = () => {
       <CompanyLogo />
       <JobOpportunity />
       <RecentArticle />
+      <Application />
     </>
   );
 };
