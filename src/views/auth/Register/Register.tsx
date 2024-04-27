@@ -137,10 +137,10 @@ const Register = () => {
                     control={form.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem className="relative">
+                      <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <>
+                          <div className="relative">
                             <Input
                               className="pr-10 h-12"
                               placeholder="Type your password"
@@ -162,7 +162,7 @@ const Register = () => {
                                 className="absolute bottom-4 right-4 text-xl cursor-pointer"
                               />
                             )}
-                          </>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -170,7 +170,7 @@ const Register = () => {
                   />
 
                   {isError && error && (
-                    <p className="text-destructive text-sm">
+                    <p className="text-primary-red text-sm">
                       {(error as any)?.data?.message}
                     </p>
                   )}
