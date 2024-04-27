@@ -24,7 +24,7 @@ import {
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const token = useAppSelector(useCurrentToken);
+  const token: string | null = useAppSelector(useCurrentToken);
 
   let user;
 
@@ -49,12 +49,9 @@ const Sidebar = () => {
       break;
   }
 
-  console.log(sidebarItems, "sidebarItems");
-  
-
   return (
-    <div className="h-full">
-      <div className="hidden border-r bg-muted/40 md:block sticky top-0 overflow-y-scroll">
+    <div className="h-full hidden md:block">
+      <div className=" border-r bg-muted/40 sticky top-0 overflow-y-scroll">
         <div className="flex h-screen flex-col  gap-2">
           <div className="flex py-5 items-center border-b px-4 lg:h-[60px] lg:px-6 ">
             <Link to="/">

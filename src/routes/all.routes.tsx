@@ -1,7 +1,7 @@
-import ChangePassword from "../views/auth/ChangePassword";
-import MyResume from "../views/candidate/MyResume";
-import Dashboard from "../views/common/Dashboard";
-import Profile from "../views/common/Profile";
+import Dashboard from "@/views/Private/Common/Dashboard";
+import Profile from "@/views/Private/Common/Profile";
+import MyResume from "@/views/Private/Candidate/MyResume";
+import ChangePassword from "@/views/auth/ChangePassword";
 
 export const routePaths = [
   {

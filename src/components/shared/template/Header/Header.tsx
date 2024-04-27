@@ -11,10 +11,14 @@ import { TfiMenu } from "react-icons/tfi";
 import headerItems from "@/constants/header.constants";
 import { LiaUser } from "react-icons/lia";
 import { Menu } from "lucide-react";
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
   const location = useLocation();
+  const token = useAppSelector(useCurrentToken);
 
   return (
     <div
@@ -119,10 +123,22 @@ const Header = () => {
           </div>
 
           <div>
-            <Link to="/login" className="hidden md:block ml-14">
-              <Button variant={"outline"}>Login / Register</Button>
-            </Link>
-            <Link to="/login" className="md:hidden text-4xl">
+            {token ? (
+              <Link to="/dashboard" className="hidden md:block">
+                <Avatar className="h-10 cursor-pointer w-10 bg-muted hover:bg-primary-gray/30 transition-all duration-300 ease-in-out flex items-center justify-center ring-1 hover:ring-2 ring-primary ring-offset-4 hover:ring-offset-2 ml-7">
+                  <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  <AvatarFallback className="font-semibold">SA</AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : (
+              <Link to="/login" className="hidden md:block ml-7">
+                <Button>Login</Button>
+              </Link>
+            )}
+            <Link
+              to={token ? "/dashboard" : "/login"}
+              className="md:hidden text-4xl"
+            >
               <LiaUser />
             </Link>
           </div>

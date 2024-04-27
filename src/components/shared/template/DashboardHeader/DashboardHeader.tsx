@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,9 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { logout } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 import {
   CircleUser,
   Home,
@@ -36,6 +40,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DashboardHeader = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <header className="flex sticky top-0 z-10 bg-background h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -129,10 +135,10 @@ const DashboardHeader = () => {
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
+          <Avatar className="h-10 cursor-pointer w-10 bg-muted hover:bg-primary-gray/30 transition-all duration-300 ease-in-out flex items-center justify-center ring-1 hover:ring-2 ring-primary ring-offset-4 hover:ring-offset-2">
+            <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <AvatarFallback className="font-semibold">SA</AvatarFallback>
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -140,7 +146,12 @@ const DashboardHeader = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer !text-primary-red"
+            onClick={() => dispatch(logout())}
+          >
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

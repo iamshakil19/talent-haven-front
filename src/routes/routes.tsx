@@ -1,14 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import { routeGenerator } from "../utils/routesGenerator";
-import Login from "../views/auth/Login";
-import Register from "../views/auth/Register";
-import MainLayout from "../components/layout/MainLayout";
-import Home from "../views/public/Home/Home";
 import { routePaths } from "./all.routes";
 import AuthLayout from "../components/layout/AuthLayout";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
-import About from "../views/public/About";
+import Jobs from "@/views/public/Jobs";
+import About from "@/views/public/About";
+import MainLayout from "@/components/layout/MainLayout";
+import Home from "@/views/public/Home/Home";
+import { routeGenerator } from "@/utils/routesGenerator";
+import Login from "@/views/auth/Login";
+import Register from "@/views/auth/Register";
+import JobDetails from "@/views/public/JobDetails";
 
 const router = createBrowserRouter([
   {
@@ -27,14 +29,22 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/jobs",
+        element: <Jobs />,
+      },
+      {
+        path: "/jobs/:id",
+        element: <JobDetails />,
+      },
     ],
   },
   {
     path: "/dashboard",
     element: (
-      // <ProtectedRoute>
-      <AuthLayout />
-      //  </ProtectedRoute>
+      <ProtectedRoute>
+        <AuthLayout />
+      </ProtectedRoute>
     ),
     children: routeGenerator(routePaths),
   },
