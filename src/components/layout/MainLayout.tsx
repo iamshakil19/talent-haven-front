@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../shared/template/Header";
+import Footer from "../shared/template/Footer";
 const MainLayout = () => {
   return (
     <div>
@@ -9,7 +10,9 @@ const MainLayout = () => {
       <div>
         <Outlet />
       </div>
-      <div className="bg-black text-white py-20 h-screen">This is footer</div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
