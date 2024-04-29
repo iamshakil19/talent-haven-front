@@ -13,6 +13,8 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CiSearch } from "react-icons/ci";
+import { PiBagSimpleThin } from "react-icons/pi";
 
 const JobFilterSidebar = () => {
   const [category, setCategory] = useState<string>("");
@@ -22,28 +24,36 @@ const JobFilterSidebar = () => {
         <Label htmlFor="search" className="font-medium text-base">
           Search By Keywords
         </Label>
-        <Input
-          type="text"
-          id="search"
-          placeholder="Job title, keywords"
-          className="!ring-1 py-3"
-        />
+
+        <div className="relative">
+          <CiSearch className="absolute left-3 text-muted-foreground text-xl top-[50%] -translate-y-2/4" />
+          <Input
+            type="text"
+            id="search"
+            placeholder="Job title, keywords"
+            className="!ring-1 py-3 pl-10"
+          />
+        </div>
       </div>
+
       <div className="grid w-full max-w-sm items-center gap-3 mt-7">
         <Label className="font-medium text-base">Category</Label>
-        <Select onValueChange={(e) => setCategory(e)}>
-          <SelectTrigger className="py-3">
-            <SelectValue placeholder="Choose a category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {/* <SelectLabel>Per Page</SelectLabel> */}
-              <SelectItem value="residential">Residential</SelectItem>
-              <SelectItem value="commercial">Commercial</SelectItem>
-              <SelectItem value="industrial">Industrial</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="relative">
+          <PiBagSimpleThin className="absolute left-3 text-muted-foreground text-xl top-[50%] -translate-y-2/4" />
+          <Select onValueChange={(e) => setCategory(e)}>
+            <SelectTrigger className="py-3 pl-10">
+              <SelectValue placeholder="Choose a category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {/* <SelectLabel>Per Page</SelectLabel> */}
+                <SelectItem value="residential">Residential</SelectItem>
+                <SelectItem value="commercial">Commercial</SelectItem>
+                <SelectItem value="industrial">Industrial</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
         <Label className="text-base">Job type</Label>

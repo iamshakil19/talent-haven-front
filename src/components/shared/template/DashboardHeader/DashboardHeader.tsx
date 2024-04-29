@@ -23,8 +23,10 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { logout } from "@/redux/features/auth/authSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { routePaths } from "@/routes/all.routes";
+import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import {
   CircleUser,
@@ -37,10 +39,20 @@ import {
   Users,
 } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const DashboardHeader = () => {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const user = useAppSelector(selectCurrentUser);
+  const role = user?.role;
+
+  const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
+  const locationPaths = location.pathname.split("/");
+  const currentPath = locationPaths?.[locationPaths.length - 1];
 
   return (
     <header className="flex sticky top-0 z-10 bg-background h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
@@ -63,46 +75,60 @@ const DashboardHeader = () => {
               </SheetClose>
             </Link>
           </div>
-          <nav className="grid gap-2 text-lg font-medium ">
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-md px-3 py-2 bg-primary/10 text-primary hover:text-foreground"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-md px-3 py-2 text-foreground hover:text-foreground"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              Orders
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge>
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <Users className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <LineChart className="h-5 w-5" />
-              Analytics
-            </Link>
-          </nav>
+
+          <div className="flex-1">
+            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+              {sidebarItems
+                ?.filter(
+                  (route) =>
+                    (route && route.label !== "") ||
+                    (route && route.children && route.children.length > 0)
+                )
+                ?.map((route, index) => (
+                  <div key={index} className="">
+                    {route && route.label !== "" && (
+                      <SheetClose asChild>
+                        <p
+                          onClick={() => navigate(`${route?.path}`)}
+                          className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all hover:text-primary cursor-pointer mb-2 ${
+                            currentPath === route.path
+                              ? "text-primary bg-primary/10"
+                              : "hover:bg-primary/5"
+                          }`}
+                        >
+                          <span className="text-lg">{route?.icon}</span>
+                          <span className="font-medium text-sm text-[15px]">
+                            {route?.label}
+                          </span>
+                        </p>
+                      </SheetClose>
+                    )}
+
+                    {route &&
+                      route.children
+                        ?.filter((child) => child && child.label !== "")
+                        ?.map((child, childIndex) => (
+                          <SheetClose asChild key={childIndex}>
+                            <p
+                              onClick={() => navigate(`${child?.path}`)}
+                              className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all hover:text-primary cursor-pointer mb-2 ${
+                                currentPath === (child && child.path)
+                                  ? "text-primary bg-primary/10"
+                                  : "hover:bg-primary/5"
+                              }`}
+                            >
+                              <span className="text-lg">{child?.icon}</span>
+                              <span className="font-medium text-sm text-[15px]">
+                                {child?.label}
+                              </span>
+                            </p>
+                          </SheetClose>
+                        ))}
+                  </div>
+                ))}
+            </nav>
+          </div>
+
           <div className="mt-auto">
             <Card>
               <CardHeader>
@@ -121,6 +147,7 @@ const DashboardHeader = () => {
           </div>
         </SheetContent>
       </Sheet>
+
       <div className="w-full flex-1">
         <form>
           <div className="relative">
@@ -133,6 +160,7 @@ const DashboardHeader = () => {
           </div>
         </form>
       </div>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="h-10 cursor-pointer w-10 bg-muted hover:bg-primary-gray/30 transition-all duration-300 ease-in-out flex items-center justify-center ring-1 hover:ring-2 ring-primary ring-offset-4 hover:ring-offset-2">

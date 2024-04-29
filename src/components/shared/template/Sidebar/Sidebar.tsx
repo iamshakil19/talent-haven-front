@@ -12,24 +12,20 @@ import { useAppSelector } from "@/redux/hooks";
 import { routePaths } from "@/routes/all.routes";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
 
-import {
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import SideMenuItem from "./SideMenuItem";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const user = useAppSelector(selectCurrentUser);
   const role = user?.role;
 
   const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
-
-  console.log("Result", sidebarItems);
+  const locationPaths = location.pathname.split("/");
+  const currentPath = locationPaths?.[locationPaths.length - 1];
 
   return (
     <div className="h-full hidden md:block">
@@ -45,52 +41,62 @@ const Sidebar = () => {
               />
             </Link>
 
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+            {/* <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
               <Menu className="h-5 w-5" />
-            </Button>
+            </Button> */}
           </div>
-          <div className="flex-1">
+
+          <div className="flex-1 mt-5">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Home className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-              >
-                <Package className="h-4 w-4" />
-                Products{" "}
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Users className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChart className="h-4 w-4" />
-                Analytics
-              </Link>
+              {sidebarItems
+                ?.filter(
+                  (route) =>
+                    (route && route.label !== "") ||
+                    (route && route.children && route.children.length > 0)
+                )
+                ?.map((route, index) => (
+                  <div key={index} className="">
+                    {route && route.label !== "" && (
+                      <p
+                        key={index}
+                        onClick={() => navigate(`${route?.path}`)}
+                        className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all hover:text-primary cursor-pointer mb-2 ${
+                          currentPath === route.path
+                            ? "text-primary bg-primary/10"
+                            : "hover:bg-primary/5"
+                        }`}
+                      >
+                        <span className="text-lg">{route?.icon}</span>
+                        <span className="font-medium text-sm text-[15px]">
+                          {route?.label}
+                        </span>
+                      </p>
+                    )}
+
+                    {route &&
+                      route.children
+                        ?.filter((child) => child && child.label !== "")
+                        ?.map((child, childIndex) => (
+                          <p
+                            key={childIndex}
+                            onClick={() => navigate(`${child?.path}`)}
+                            className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all hover:text-primary cursor-pointer mb-2 ${
+                              currentPath === (child && child.path)
+                                ? "text-primary bg-primary/10"
+                                : "hover:bg-primary/5"
+                            }`}
+                          >
+                            <span className="text-lg">{child?.icon}</span>
+                            <span className="font-medium text-sm text-[15px]">
+                              {child?.label}
+                            </span>
+                          </p>
+                        ))}
+                  </div>
+                ))}
             </nav>
           </div>
+
           <div className="mt-auto p-4">
             <Card>
               <CardHeader className="p-2 pt-0 md:p-4">

@@ -9,15 +9,17 @@ export type TSidebarItem =
       title?: string;
       label: string;
       path: string;
+      icon?: ReactNode;
       children?: TSidebarItem[];
     }
   | undefined;
 
-export type TUserPath = {
+export type TRoutePath = {
   title?: string;
   name: string;
   path: string;
+  icon?: ReactNode;
   authority: string[] | [];
   element?: ReactNode;
-  children?: TUserPath[];
+  children?: TRoutePath[];
 };
