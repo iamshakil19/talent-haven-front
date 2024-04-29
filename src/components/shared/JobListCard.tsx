@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "../ui/card";
 import { PiBuildingsLight } from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
@@ -16,29 +15,27 @@ const JobListCard = () => {
           />
         </div>
         <div className="flex flex-col justify-between gap-4 relative w-full">
-
           <span className="absolute -right-4 -top-5 hover:bg-primary-gray/20 h-8 w-8 rounded-full transition-all duration-300 ease-in-out hidden md:flex items-center justify-center">
             <PiBookmarkSimpleThin className="text-lg" />
           </span>
 
-
           <p className="font-medium hover:text-primary duration-300 transition-all ease-in-out cursor-pointer max-w-sm">
             Software Engineer (Android), Libraries
           </p>
-          <div className="flex items-center gap-4 flex-wrap text-primary-gray">
-            <p className="flex items-center gap-1">
+          <div className="flex items-center gap-4 flex-wrap">
+            <p className="flex items-center gap-1 text-primary-gray">
               <PiBuildingsLight size={19} />
               <span className="text-sm">Segment</span>
             </p>
-            <p className="flex items-center gap-1">
+            <p className="flex items-center gap-1 text-primary-gray">
               <IoLocationOutline size={19} />
               <span className="text-sm">London, UK</span>
             </p>
-            <p className="flex items-center gap-1">
+            <p className="flex items-center gap-1 text-primary-gray">
               <BsClock />
               <span className="text-sm">11 hours ago</span>
             </p>
-            <p className="flex items-center gap-1">
+            <p className="flex items-center gap-1 text-primary-gray">
               <LiaMoneyBillWaveSolid size={19} />
               <span className="text-sm">35k - 45k</span>
             </p>

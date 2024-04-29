@@ -31,6 +31,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          purple: "hsl(var(--primary-purple))",
           blue: "hsl(var(--primary-blue))",
           red: "hsl(var(--primary-red))",
           orange: "hsl(var(--primary-orange))",
@@ -40,6 +41,7 @@ module.exports = {
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          purple: "hsl(var(--secondary-purple))",
           blue: "hsl(var(--secondary-blue))",
           red: "hsl(var(--secondary-red))",
           orange: "hsl(var(--secondary-orange))",

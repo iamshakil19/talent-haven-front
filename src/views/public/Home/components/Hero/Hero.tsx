@@ -47,7 +47,10 @@ const Hero = () => {
             </div>
 
             <div className="w-full lg:w-fit mt-5 lg:mt-0">
-              <Button className="h-12 w-full">
+              <Button
+                isRipple
+                className="h-12 w-full"
+              >
                 {config.STATIC_TEXT.FIND_JOBS_BTN_TEXT}
               </Button>
             </div>
