@@ -9,9 +9,7 @@ const { unAuthenticatedEntryPath } = appConfig;
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const token = useAppSelector(useCurrentToken);
-
   const location = useLocation();
-
   if (!token) {
     return (
       <Navigate

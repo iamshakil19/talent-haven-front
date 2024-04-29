@@ -7,12 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TUser, useCurrentToken } from "@/redux/features/auth/authSlice";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { routePaths } from "@/routes/all.routes";
-import { ROLE } from "@/types";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
-import { verifyToken } from "@/utils/verifyToken";
+
 import {
   Home,
   LineChart,
@@ -21,33 +20,16 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const token: string | null = useAppSelector(useCurrentToken);
+  const user = useAppSelector(selectCurrentUser);
+  const role = user?.role;
 
-  let user;
+  const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
 
-  if (token) {
-    user = verifyToken(token);
-  }
-
-  let sidebarItems;
-
-  switch ((user as TUser)!.role) {
-    case ROLE.CANDIDATE:
-      sidebarItems = sidebarItemsGenerator(routePaths, ROLE.CANDIDATE);
-      break;
-    // case userRole.FACULTY:
-    //   sidebarItems = sidebarItemsGenerator(facultyPaths, userRole.FACULTY);
-    //   break;
-    // case userRole.STUDENT:
-    //   sidebarItems = sidebarItemsGenerator(studentPaths, userRole.STUDENT);
-    //   break;
-
-    default:
-      break;
-  }
+  console.log("Result", sidebarItems);
 
   return (
     <div className="h-full hidden md:block">

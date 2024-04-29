@@ -11,6 +11,8 @@ const AuthLayout = () => {
         <div className="flex flex-col">
           {/* Dashboard Header */}
           <DashboardHeader />
+
+          {/* Dashboard Content */}
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-5 lg:p-5">
             <Outlet />
           </main>

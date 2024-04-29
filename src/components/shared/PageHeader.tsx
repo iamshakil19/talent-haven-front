@@ -12,7 +12,6 @@ export enum IPageHeaderType {
   DEFAULT = "default",
   CANDIDATE = "candidate",
   EMPLOYER = "employer",
-  COMPANY = "company",
 }
 
 const PageHeader = ({
@@ -65,9 +64,6 @@ const PageHeader = ({
       break;
     case "employer":
       content = <div>This is employee</div>;
-      break;
-    case "company":
-      content = <div>This is company</div>;
       break;
   }
   return (

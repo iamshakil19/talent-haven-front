@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export type TRoute = {
   path: string;
@@ -6,15 +6,18 @@ export type TRoute = {
 };
 export type TSidebarItem =
   | {
-      key: string;
-      label: ReactNode;
+      title?: string;
+      label: string;
+      path: string;
       children?: TSidebarItem[];
     }
   | undefined;
 
 export type TUserPath = {
+  title?: string;
   name: string;
-  path?: string;
+  path: string;
+  authority: string[] | [];
   element?: ReactNode;
   children?: TUserPath[];
 };
