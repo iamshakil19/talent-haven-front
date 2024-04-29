@@ -4,9 +4,20 @@ import { IoLocationOutline } from "react-icons/io5";
 import { BsClock } from "react-icons/bs";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { PiBookmarkSimpleThin } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 const JobListCard = () => {
+  const navigate = useNavigate();
+
+  const handleBookmark = (e: any) => {
+    e.stopPropagation();
+    console.log("bookmarked");
+  };
+
   return (
-    <Card className="hover:shadow-lg cursor-pointer hover:shadow-primary-gray/10 transition-all duration-300">
+    <Card
+      onClick={() => navigate(`/jobs/${"software-engineer-983456"}`)}
+      className="hover:shadow-lg cursor-pointer hover:shadow-primary-gray/10 transition-all duration-300"
+    >
       <CardContent className="p-7 flex gap-3">
         <div>
           <img
@@ -15,7 +26,10 @@ const JobListCard = () => {
           />
         </div>
         <div className="flex flex-col justify-between gap-4 relative w-full">
-          <span className="absolute -right-4 -top-5 hover:bg-primary-gray/20 h-8 w-8 rounded-full transition-all duration-300 ease-in-out hidden md:flex items-center justify-center">
+          <span
+            onClick={(e) => handleBookmark(e)}
+            className="absolute -right-4 -top-5 hover:bg-primary-gray/20 h-8 w-8 rounded-full transition-all duration-300 ease-in-out hidden md:flex items-center justify-center"
+          >
             <PiBookmarkSimpleThin className="text-lg" />
           </span>
 

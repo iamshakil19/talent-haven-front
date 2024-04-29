@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const JobFilterSidebar = () => {
   const [category, setCategory] = useState<string>("");
   return (
-    <div className="bg-[#f3f6ff8c] hidden lg:block p-6">
+    <div className="bg-[#f3f6ff8c] hidden lg:block p-6 rounded-md">
       <div className="grid w-full max-w-sm items-center gap-3">
         <Label htmlFor="search" className="font-medium text-base">
           Search By Keywords
@@ -46,12 +47,7 @@ const JobFilterSidebar = () => {
       </div>
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
         <Label className="text-base">Job type</Label>
-        <div className="flex items-center space-x-2">
-          <Switch id="Freelancer" className="h-5 w-10" />
-          <Label htmlFor="Freelancer" className="cursor-pointer">
-            Freelancer
-          </Label>
-        </div>
+
         <div className="flex items-center space-x-2">
           <Switch id="Full-Time" className="h-5 w-10" />
           <Label htmlFor="Full-Time" className="cursor-pointer">
@@ -65,15 +61,27 @@ const JobFilterSidebar = () => {
           </Label>
         </div>
         <div className="flex items-center space-x-2">
-          <Switch id="Temporary" className="h-5 w-10" />
-          <Label htmlFor="Temporary" className="cursor-pointer">
-            Temporary
+          <Switch id="contract" className="h-5 w-10" />
+          <Label htmlFor="contract" className="cursor-pointer">
+            Contract
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch id="internship" className="h-5 w-10" />
+          <Label htmlFor="internship" className="cursor-pointer">
+            Internship
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch id="Freelance" className="h-5 w-10" />
+          <Label htmlFor="Freelance" className="cursor-pointer">
+            Freelance
           </Label>
         </div>
       </div>
 
       <RadioGroup
-        defaultValue="date"
+        defaultValue="all"
         className="grid w-full max-w-sm items-center gap-5 mt-7"
       >
         <Label className="text-base">Date Posted</Label>
@@ -114,6 +122,28 @@ const JobFilterSidebar = () => {
           </Label>
         </div>
       </RadioGroup>
+
+      <div className="grid w-full max-w-sm items-center gap-5 mt-7">
+        <Label className="text-base">Location</Label>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="remote" />
+          <Label htmlFor="remote" className="cursor-pointer">
+            Remote
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="onsite" />
+          <Label htmlFor="onsite" className="cursor-pointer">
+            Onsite
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="hybrid" />
+          <Label htmlFor="hybrid" className="cursor-pointer">
+            Hybrid
+          </Label>
+        </div>
+      </div>
 
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
         <Label className="text-base">Experience Level</Label>

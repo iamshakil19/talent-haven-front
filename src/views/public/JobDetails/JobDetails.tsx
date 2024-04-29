@@ -1,7 +1,12 @@
+import PageHeader, { IPageHeaderType } from "@/components/shared/PageHeader";
 import React from "react";
 
 const JobDetails = () => {
-  return <div>this is job details</div>;
+  return (
+    <div>
+      <PageHeader type={IPageHeaderType.DEFAULT} />
+    </div>
+  );
 };
 
 export default JobDetails;

@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { IoFilterSharp } from "react-icons/io5";
 import JobFilterSidebar from "./JobFilterSidebar";
 import Recruit from "../Home/components/Recruit";
+import PageHeader, { IPageHeaderType } from "@/components/shared/PageHeader";
 
 const Jobs = () => {
   const [limit, setLimit] = useState<number>(0);
@@ -36,12 +37,7 @@ const Jobs = () => {
         <IoFilterSharp />
         Filter
       </Button>
-      <div className="text-center p-10 bg-[#e4eafe]">
-        <Container>
-          <p className="text-2xl mb-3 tracking-wide font-semibold ">Jobs</p>
-          <p className="text-primary-gray tracking-wide text-sm">Home / Jobs</p>
-        </Container>
-      </div>
+      <PageHeader type={IPageHeaderType.DEFAULT} />
       <Container className="mt-10">
         <div className="grid grid-cols-4 gap-5 min-h-screen">
           <div>
