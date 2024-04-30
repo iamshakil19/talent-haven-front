@@ -35,11 +35,11 @@ const Register = () => {
     },
   });
 
+  const [userType, setUserType] = useState<string>("candidate");
+
   const onSubmit = async (data: z.infer<typeof RegisterConfig.FORM_SCHEMA>) => {
     try {
-      console.log(data);
-
-      const res = await register({ ...data }).unwrap();
+      const res = await register({ ...data, role: userType }).unwrap();
 
       if (res) {
         toast.success("Successfully Registered", {
@@ -88,7 +88,10 @@ const Register = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-5"
                 >
-                  <Tabs defaultValue="candidate">
+                  <Tabs
+                    defaultValue="candidate"
+                    onValueChange={(e) => setUserType(e)}
+                  >
                     <TabsList className="w-full gap-2">
                       <TabsTrigger className="w-full h-full" value="candidate">
                         Candidate
