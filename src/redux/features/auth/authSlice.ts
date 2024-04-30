@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { ROLE } from "@/types";
 
 export type TUser = {
-  userId: string;
+  email: string;
   role: ROLE;
   iat: number;
   exp: number;

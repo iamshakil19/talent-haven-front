@@ -53,13 +53,13 @@
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
     background: transparent;
-    margin-block: 5px;
+    margin-block: 2px;
   }
 
   /* Handle */
