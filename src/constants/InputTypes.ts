@@ -4,7 +4,7 @@ export enum INPUT_TYPES {
     DATE = 'date',
     TIME = 'time',
     MONTH = 'month',
-    DROPDOWN = 'select',
+    SELECT = 'select',
     CHECKBOX = 'checkbox',
     RADIO = 'radio',
     TEXTAREA = 'textarea',

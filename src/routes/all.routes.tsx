@@ -10,6 +10,8 @@ import { MdOutlineWorkOutline } from "react-icons/md";
 import { GrDocumentText } from "react-icons/gr";
 import { GoBookmark } from "react-icons/go";
 import { RiLockPasswordLine } from "react-icons/ri";
+import AddNewJob from "@/views/Private/Employer/AddNewJob";
+import ManageJobs from "@/views/Private/Employer/ManageJobs";
 export const routePaths = [
   {
     name: "Dashboard",
@@ -63,14 +65,14 @@ export const routePaths = [
       {
         name: "Add New Job",
         path: "add-new-job",
-        element: <MyResume />,
+        element: <AddNewJob />,
         icon: <VscSend />,
         authority: [ROLE.EMPLOYER],
       },
       {
         name: "Manage Jobs",
         path: "manage-jobs",
-        element: <MyResume />,
+        element: <ManageJobs />,
         icon: <MdOutlineWorkOutline />,
         authority: [ROLE.EMPLOYER],
       },
