@@ -5,12 +5,35 @@ import { BsClock } from "react-icons/bs";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { PiBookmarkSimpleThin } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { toast } from "sonner";
 const JobListCard = () => {
   const navigate = useNavigate();
 
+  const user = useAppSelector(selectCurrentUser);
+
   const handleBookmark = (e: any) => {
     e.stopPropagation();
-    console.log("bookmarked");
+    const id = "1";
+
+    if (!user) {
+      navigate("/login");
+      toast.warning("You must be logged in", {
+        id: "bookmark",
+        duration: 2000,
+      });
+    } else if (user && user?.role !== "candidate") {
+      toast.warning("Only candidate can bookmark this job", {
+        id: "bookmark",
+        duration: 2000,
+      });
+    } else {
+      toast.success("Successfully Bookmarked", {
+        id: "bookmark",
+        duration: 2000,
+      });
+    }
   };
 
   return (

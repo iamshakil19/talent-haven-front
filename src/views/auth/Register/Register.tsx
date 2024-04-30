@@ -14,18 +14,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/redux/hooks";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import AnimatedPageWrapper from "@/hoc";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const Register = () => {
-  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const [register, { isLoading, isError, error }] = useRegisterMutation();
   const [passwordToggle, setPasswordToggle] = useState(false);
-
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const defaultValue = RegisterConfig.FORM_DEFAULT_VALUE;
@@ -39,14 +37,19 @@ const Register = () => {
 
   const onSubmit = async (data: z.infer<typeof RegisterConfig.FORM_SCHEMA>) => {
     try {
-      // const res = await login({ ...data }).unwrap();
-
       console.log(data);
 
-      // const user = verifyToken(res.data.accessToken) as TUser;
-      // dispatch(setUser({ user: user, token: res.data.accessToken }));
-      // toast.success("Logged in", { id: "login", duration: 2000 });
-      // navigate("/dashboard");
+      const res = await register({ ...data }).unwrap();
+
+      if (res) {
+        toast.success("Successfully Registered", {
+          id: "login",
+          duration: 2000,
+        });
+        navigate("/login");
+
+        form.reset();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -171,7 +174,9 @@ const Register = () => {
 
                   {isError && error && (
                     <p className="text-primary-red text-sm">
-                      {(error as any)?.data?.message}
+                      {(error as any)?.data?.error?.code === 11000
+                        ? (error as any)?.data?.errorSources?.[0].message
+                        : (error as any)?.data?.message}
                     </p>
                   )}
 

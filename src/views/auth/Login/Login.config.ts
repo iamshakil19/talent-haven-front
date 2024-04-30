@@ -14,8 +14,9 @@ const STATIC_TEXT: IStaticText = {
 
 const FORM_SCHEMA = z.object({
   email: z
-    .string({ required_error: "email is required" })
-    .min(1, { message: "Email is required" })
+    .string({ required_error: "Email is required" })
+    // .min(1, { message: "Email is required" })
+    .nonempty({ message: "Email is required" })
     .email({ message: "Must be a valid email" }),
   password: z
     .string({ required_error: "Password is required" })

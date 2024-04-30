@@ -47,6 +47,7 @@ const Login = () => {
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in", { id: "login", duration: 2000 });
       navigate("/dashboard");
+      form.reset();
     } catch (err) {
       console.log(err);
     }
