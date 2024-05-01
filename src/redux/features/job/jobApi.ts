@@ -6,7 +6,7 @@ const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     addNewJob: builder.mutation({
       query: (data) => ({
-        url: `${JOB_URL}`,
+        url: `${JOB_URL}/create`,
         method: "POST",
         body: data,
       }),

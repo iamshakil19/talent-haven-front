@@ -60,10 +60,10 @@ const ChangePassword = () => {
         <div className="flex items-center justify-center py-12 px-5">
           <div className=" grid gap-6 w-full max-w-md mt-5 lg:mt-0 lg:border p-10 rounded-md bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] lg:shadow-md shadow-gray-200">
             <div className="grid gap-2 ">
-              <h1 className="text-3xl font-bold text-primary-gray">
+              <h1 className="text-xl font-bold text-primary">
                 {config.staticText.title}
               </h1>
-              <p className="text-muted-foreground text-wrap">
+              <p className="text-muted-foreground text-wrap text-sm">
                 {config.staticText.subTitle}
               </p>
             </div>

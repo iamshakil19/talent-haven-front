@@ -12,6 +12,7 @@ import { GoBookmark } from "react-icons/go";
 import { RiLockPasswordLine } from "react-icons/ri";
 import AddNewJob from "@/views/Private/Employer/AddNewJob";
 import ManageJobs from "@/views/Private/Employer/ManageJobs";
+import ShortListedResume from "@/views/Private/Employer/ShortListedResume";
 export const routePaths = [
   {
     name: "Dashboard",
@@ -86,7 +87,7 @@ export const routePaths = [
       {
         name: "Short Listed Resume",
         path: "short-listed-resume",
-        element: <MyResume />,
+        element: <ShortListedResume />,
         icon: <GoBookmark />,
         authority: [ROLE.EMPLOYER],
       },

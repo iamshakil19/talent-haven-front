@@ -61,6 +61,11 @@ const FORM_SCHEMA = z.object({
   salary: z
     .string({ required_error: "Salary is required" })
     .nonempty({ message: "Salary is required" }),
+  technology: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "You have to select at least one item.",
+    }),
 });
 
 const FORM_DEFAULT_VALUE = {
@@ -72,6 +77,7 @@ const FORM_DEFAULT_VALUE = {
   experience: "",
   salary: "",
   isUrgent: false,
+  technology: [],
 };
 
 export type FormFieldName =
@@ -82,7 +88,8 @@ export type FormFieldName =
   | "location"
   | "experience"
   | "salary"
-  | "isUrgent";
+  | "isUrgent"
+  | "technology";
 
 const FORM_INPUTS: INPUT_SCHEMA[] = [
   {
@@ -206,6 +213,47 @@ const FORM_INPUTS: INPUT_SCHEMA[] = [
     placeholder: "Type salary",
     required: true,
     type: INPUT_TYPES.NUMBER,
+  },
+  {
+    name: "technology",
+    label: "Technology",
+    placeholder: "Select Technology",
+    required: true,
+    type: INPUT_TYPES.SELECT,
+    options: [
+      {
+        value: "next.js",
+        label: "Next.js",
+      },
+      {
+        value: "sveltekit",
+        label: "SvelteKit",
+      },
+      {
+        value: "nuxt.js",
+        label: "Nuxt.js",
+      },
+      {
+        value: "remix",
+        label: "Remix",
+      },
+      {
+        value: "astro",
+        label: "Astro",
+      },
+      {
+        value: "wordpress",
+        label: "WordPress",
+      },
+      {
+        value: "express.js",
+        label: "Express.js",
+      },
+      {
+        value: "nest.js",
+        label: "Nest.js",
+      },
+    ],
   },
   {
     name: "isUrgent",

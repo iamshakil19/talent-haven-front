@@ -178,7 +178,7 @@ const DashboardHeader = ({
               <Button
                 variant="ghost"
                 size="circle"
-                className="h-10 w-10 hover:bg-primary-gray/15"
+                className="h-10 w-10 hover:bg-primary-gray/15 !ring-0 !ring-offset-0  !outline-none"
               >
                 <span className="bg-primary-red w-2 h-2 rounded-full absolute top-2 right-2.5"></span>
                 <MdNotificationsNone className="text-primary-gray" size={27} />
