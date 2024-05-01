@@ -58,7 +58,7 @@ const ChangePassword = () => {
 
       <div className="relative">
         <div className="flex items-center justify-center py-12 px-5">
-          <div className=" grid gap-6 w-full max-w-md mt-14 lg:mt-0 lg:border p-10 rounded-md lg:bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] lg:shadow-md shadow-gray-200">
+          <div className=" grid gap-6 w-full max-w-md mt-5 lg:mt-0 lg:border p-10 rounded-md bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] lg:shadow-md shadow-gray-200">
             <div className="grid gap-2 ">
               <h1 className="text-3xl font-bold text-primary-gray">
                 {config.staticText.title}

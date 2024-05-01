@@ -1,9 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../shared/template/Sidebar/Sidebar";
 import DashboardHeader from "../shared/template/DashboardHeader";
-import { Button } from "../ui/button";
 import { useState } from "react";
-import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const AuthLayout = () => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);
@@ -18,23 +16,13 @@ const AuthLayout = () => {
         }`}
       >
         {/* Sidebar */}
-        <div className="relative hidden md:block">
-          <Button
-            onClick={() => setCollapsed(!isCollapsed)}
-            variant="outline"
-            size="icon"
-            className="ml-auto h-8 w-8 absolute -right-4 top-3 z-50 rounded-full bg-secondary-purple"
-          >
-            <MdKeyboardArrowLeft
-              className={`h-5 w-5 ${isCollapsed ? "rotate-180" : ""}`}
-            />
-          </Button>
-          <Sidebar isCollapsed={isCollapsed} />
-        </div>
-
+        <Sidebar isCollapsed={isCollapsed} />
         <div className="flex flex-col w-full">
           {/* Dashboard Header */}
-          <DashboardHeader />
+          <DashboardHeader
+            isCollapsed={isCollapsed}
+            setCollapsed={setCollapsed}
+          />
 
           {/* Dashboard Content */}
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-5 lg:p-5">

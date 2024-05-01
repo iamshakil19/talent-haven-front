@@ -21,17 +21,14 @@ import { IoMdSettings } from "react-icons/io";
 const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const user = useAppSelector(selectCurrentUser);
   const role = user?.role;
-
   const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
   const locationPaths = location.pathname.split("/");
   const currentPath = locationPaths?.[locationPaths.length - 1];
 
-
   return (
-    <div className={`h-full`}>
+    <div className={`h-full relative hidden md:block`}>
       <div className=" bg-muted/60 sticky top-0 overflow-y-scroll">
         <div className="flex h-screen flex-col gap-2">
           <div className="flex py-5 items-center px-4 lg:h-[60px] lg:px-6">

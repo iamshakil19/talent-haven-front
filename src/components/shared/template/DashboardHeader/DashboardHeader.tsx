@@ -31,10 +31,16 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { LifeBuoy, LogOut, Menu, Settings, User } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
-import { MdNotificationsNone } from "react-icons/md";
+import { MdKeyboardArrowLeft, MdNotificationsNone } from "react-icons/md";
 import { IoMailOpenOutline } from "react-icons/io5";
 
-const DashboardHeader = () => {
+const DashboardHeader = ({
+  isCollapsed,
+  setCollapsed,
+}: {
+  isCollapsed: boolean;
+  setCollapsed: any;
+}) => {
   const dispatch: Dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -144,15 +150,36 @@ const DashboardHeader = () => {
 
       {/* Dashboard Header */}
       <div className="flex items-center justify-between gap-5 w-full">
-        <Button variant="ghost" size="circle" className="h-10 w-10 ml-5">
-          <IoSearch className="text-primary-gray" size={25} />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => setCollapsed(!isCollapsed)}
+            variant="outline"
+            size="icon"
+            className="h-9 w-9 z-50 rounded-full bg-secondary-purple hidden md:flex items-center justify-center"
+          >
+            <MdKeyboardArrowLeft
+              className={`h-5 w-5 ${isCollapsed ? "rotate-180" : ""}`}
+            />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="circle"
+            className="h-10 w-10 ml-5 hover:bg-primary-gray/15"
+          >
+            <IoSearch className="text-primary-gray" size={25} />
+          </Button>
+        </div>
 
         <div className="flex items-center gap-5">
           {/* Notification */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="circle" className="h-10 w-10">
+              <Button
+                variant="ghost"
+                size="circle"
+                className="h-10 w-10 hover:bg-primary-gray/15"
+              >
                 <span className="bg-primary-red w-2 h-2 rounded-full absolute top-2 right-2.5"></span>
                 <MdNotificationsNone className="text-primary-gray" size={27} />
               </Button>

@@ -15,12 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PiBagSimpleThin } from "react-icons/pi";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -38,9 +35,6 @@ import { Switch } from "@/components/ui/switch";
 
 const AddNewJob = () => {
   const [addNewJob, { isLoading, isError, error }] = useAddNewJobMutation();
-  // const [value, setValue] = useState("");
-
-  // console.log(value);
 
   const defaultValue = config.FORM_DEFAULT_VALUE;
 
@@ -91,13 +85,13 @@ const AddNewJob = () => {
       <DashboardBreadcrumb />
 
       <div className="relative">
-        <div className="flex items-center py-5">
-          <div className=" grid gap-6 w-full max-w-6xl mt-14 lg:mt-0 lg:border p-10 rounded-md lg:bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB]">
+        <div className="flex items-center justify-center py-5">
+          <div className=" grid gap-3 w-full max-w-6xl lg:border p-5 rounded-md bg-gradient-to-br from-[#f2f5fb81] to-[#eaf0fb7e]">
             <div className="grid gap-2 ">
-              <h1 className="text-3xl font-bold text-primary-gray">
+              <h1 className="text-xl font-bold text-primary-gray">
                 {config.staticText.title}
               </h1>
-              <p className="text-muted-foreground text-wrap">
+              <p className="text-muted-foreground text-sm text-wrap">
                 {config.staticText.subTitle}
               </p>
             </div>
@@ -225,7 +219,7 @@ const AddNewJob = () => {
                           control={form.control}
                           name={input?.name as FormFieldName}
                           render={({ field }) => (
-                            <FormItem className="col-span-full">
+                            <FormItem className="content-end">
                               <div className="flex items-center space-x-2">
                                 <FormControl>
                                   <Switch
