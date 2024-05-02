@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { INPUT_TYPES } from "@/constants/InputTypes";
 import { Switch } from "@/components/ui/switch";
@@ -110,7 +110,7 @@ const AddNewJobForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {config.FORM_INPUTS?.map((input, index) => (
-              <>
+              <React.Fragment key={index}>
                 {/* Condition 1 for text */}
                 {input.type === INPUT_TYPES.TEXT && input.name === "title" && (
                   <FormField
@@ -339,7 +339,7 @@ const AddNewJobForm = () => {
                       )}
                     />
                   )}
-              </>
+              </React.Fragment>
             ))}
           </div>
 
