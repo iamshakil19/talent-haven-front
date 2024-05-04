@@ -32,6 +32,7 @@ import { RiUserStarLine } from "react-icons/ri";
 import ReactQuill from "react-quill";
 import { useAddNewJobMutation } from "@/redux/features/job/jobApi";
 import { FormFieldName, config } from "./AddNewJob.config";
+import DynamicErrorForForm from "@/components/shared/DynamicErrorForForm";
 
 const AddNewJobForm = () => {
   const [addNewJob, { isLoading, isError, error, isSuccess }] =
@@ -49,7 +50,12 @@ const AddNewJobForm = () => {
 
   const onSubmit = async (data: z.infer<typeof config.FORM_SCHEMA>) => {
     try {
-      const res = await addNewJob({ ...data }).unwrap();
+      const { experience, ...others } = data;
+      const finalData = { ...others, experience: Number(experience) };
+
+      console.log(finalData);
+
+      const res = await addNewJob(finalData).unwrap();
       if (res) {
         toast.success("Successfully Job Added", {
           id: "addNewJob",
@@ -82,10 +88,6 @@ const AddNewJobForm = () => {
     }
   }, [form.watch("description")]);
 
-  const FragmentWithKey = ({ children }: { children: any }) => {
-    return <>{children}</>;
-  };
-
   const handleFrameworksChange = (selectedValues: string[]) => {
     form.setValue("technology", selectedValues);
     form.clearErrors("technology");
@@ -98,7 +100,7 @@ const AddNewJobForm = () => {
       form.trigger("technology");
     }
 
-    if (technologyValue.length > 0) {
+    if (technologyValue?.length > 0) {
       form.clearErrors("technology");
     } else {
     }
@@ -140,6 +142,11 @@ const AddNewJobForm = () => {
                           />
                         </FormControl>
                         <FormMessage />
+                        <DynamicErrorForForm
+                          isError={isError}
+                          error={error}
+                          inputName={input.name}
+                        />
                       </FormItem>
                     )}
                   />
@@ -203,6 +210,11 @@ const AddNewJobForm = () => {
                             </Select>
                           </div>
                           <FormMessage />
+                          <DynamicErrorForForm
+                            isError={isError}
+                            error={error}
+                            inputName={input.name}
+                          />
                         </FormItem>
                       )}
                     />
@@ -239,6 +251,11 @@ const AddNewJobForm = () => {
                           />
                         </FormControl>
                         <FormMessage />
+                        <DynamicErrorForForm
+                          isError={isError}
+                          error={error}
+                          inputName={input.name}
+                        />
                       </FormItem>
                     )}
                   />
@@ -300,13 +317,18 @@ const AddNewJobForm = () => {
                                   ? undefined
                                   : Array.isArray(field.value)
                                   ? field.value.join("\n")
-                                  : field.value
+                                  : String(field.value)
                               }
                               modules={config.reactQuillModule}
                               formats={config.reactQuillFormats}
                             />
                           </FormControl>
                           <FormMessage />
+                          <DynamicErrorForForm
+                            isError={isError}
+                            error={error}
+                            inputName={input.name}
+                          />
                         </FormItem>
                       )}
                     />
@@ -335,6 +357,11 @@ const AddNewJobForm = () => {
                             />
                           </FormControl>
                           <FormMessage />
+                          <DynamicErrorForForm
+                            isError={isError}
+                            error={error}
+                            inputName={input.name}
+                          />
                         </FormItem>
                       )}
                     />

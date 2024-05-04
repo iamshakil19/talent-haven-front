@@ -1,4 +1,11 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { tagTypes } from "@/redux/tag-types";
+import { TResponseRedux } from "@/types";
+
+interface FullTagDescription<T = string> {
+  type: string;
+  id?: T;
+}
 
 const JOB_URL = "/job";
 
@@ -13,9 +20,15 @@ const jobApi = baseApi.injectEndpoints({
     }),
     getAllJobs: builder.query({
       query: () => ({
-        url: `${JOB_URL}`,
+        url: `${JOB_URL}/all-jobs`,
         method: "GET",
       }),
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
     }),
     getSingleJob: builder.query({
       query: (data) => ({

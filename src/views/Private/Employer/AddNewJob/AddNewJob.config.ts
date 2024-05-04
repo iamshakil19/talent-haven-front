@@ -57,10 +57,13 @@ const FORM_SCHEMA = z.object({
   experience: z
     .string({ required_error: "Experience is required" })
     .nonempty({ message: "Experience is required" }),
+
+
   isUrgent: z.boolean().optional(),
-  salary: z
-    .string({ required_error: "Salary is required" })
-    .nonempty({ message: "Salary is required" }),
+  salary: z.coerce
+    .number({ required_error: "Salary is required" })
+    .min(1, { message: "Salary must be greater than 0" }),
+
   technology: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
@@ -75,7 +78,7 @@ const FORM_DEFAULT_VALUE = {
   type: "",
   location: "",
   experience: "",
-  salary: "",
+  salary: 0,
   isUrgent: false,
   technology: [],
 };

@@ -22,8 +22,8 @@ export const sidebarItemsGenerator = (items: TRoutePath[], role: string) => {
           path: item.path,
           icon: item.icon,
           children:
-            filteredChildren.length > 0
-              ? filteredChildren.map((child) => ({
+            filteredChildren?.length > 0
+              ? filteredChildren?.map((child) => ({
                   label: child.name,
                   path: child.path,
                   icon: child.icon,

@@ -25,7 +25,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const role = user?.role;
   const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
   const locationPaths = location.pathname.split("/");
-  const currentPath = locationPaths?.[locationPaths.length - 1];
+  const currentPath = locationPaths?.[locationPaths?.length - 1];
 
   return (
     <div className={`h-full relative hidden md:block`}>
@@ -51,7 +51,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
                   ?.filter(
                     (route) =>
                       (route && route.label !== "") ||
-                      (route && route.children && route.children.length > 0)
+                      (route && route.children && route.children?.length > 0)
                   )
                   ?.map((route, index) => (
                     <div key={index} className="">
@@ -115,7 +115,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
                   ?.filter(
                     (route) =>
                       (route && route.label !== "") ||
-                      (route && route.children && route.children.length > 0)
+                      (route && route.children && route.children?.length > 0)
                   )
                   ?.map((route, index) => (
                     <div key={index} className="">

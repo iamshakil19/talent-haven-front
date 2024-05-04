@@ -24,7 +24,7 @@ const DashboardBreadcrumb = () => {
           <span key={index} className="flex items-center gap-2.5">
             <BreadcrumbSeparator />
             <BreadcrumbItem className="capitalize">
-              {index === paths.length - 1 ? (
+              {index === paths?.length - 1 ? (
                 <span>{item}</span>
               ) : (
                 <Link to={`/${item}`} className="hover:text-primary">

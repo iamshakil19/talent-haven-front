@@ -51,7 +51,7 @@ const DashboardHeader = ({
 
   const sidebarItems = sidebarItemsGenerator(routePaths, role as string);
   const locationPaths = location.pathname.split("/");
-  const currentPath = locationPaths?.[locationPaths.length - 1];
+  const currentPath = locationPaths?.[locationPaths?.length - 1];
 
   return (
     <header className="flex sticky top-0 z-10 bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
@@ -82,7 +82,7 @@ const DashboardHeader = ({
                 ?.filter(
                   (route) =>
                     (route && route.label !== "") ||
-                    (route && route.children && route.children.length > 0)
+                    (route && route.children && route.children?.length > 0)
                 )
                 ?.map((route, index) => (
                   <div key={index} className="">
@@ -195,7 +195,7 @@ const DashboardHeader = ({
               <DropdownMenuGroup className="overflow-y-scroll max-h-80">
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child.png" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
