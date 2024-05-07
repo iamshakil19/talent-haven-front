@@ -1,6 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './features/auth/authSlice';
-import { baseApi } from './api/baseApi';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./features/auth/authSlice";
+import jobReducer from "./features/job/jobSlice";
+import { baseApi } from "./api/baseApi";
 import {
   persistReducer,
   persistStore,
@@ -10,11 +11,11 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: 'auth',
+  key: "auth",
   storage,
 };
 
@@ -24,6 +25,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
+    job: jobReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
@@ -32,7 +34,6 @@ export const store = configureStore({
       },
     }).concat(baseApi.middleware),
 });
-
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

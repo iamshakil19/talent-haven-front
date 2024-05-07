@@ -1,5 +1,5 @@
 import DashboardBreadcrumb from "@/components/shared/DashboardBreadcrumb";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "./components/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import Loading from "@/components/shared/Loading";
@@ -10,12 +10,21 @@ import { DataTableRowActions } from "./components/data-table-row-actions";
 import { Job } from "./data/schema";
 import { locations } from "./data/data";
 import Countdown from "react-countdown";
+import { RiComputerLine } from "react-icons/ri";
+import { PiOfficeChairFill } from "react-icons/pi";
+import { IoMdSwap } from "react-icons/io";
+import { FaHandshake } from "react-icons/fa6";
+import { useAppSelector } from "@/redux/hooks";
+
+import { setAllApplicantFilter } from "@/redux/features/job/jobSlice";
 
 const AllApplicants = () => {
+  const { filter } = useAppSelector((state) => state.job.allApplicantsTable);
+
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(20);
+  const [size, setSize] = useState<number>(10);
   const [sort, setSort] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
 
@@ -23,7 +32,27 @@ const AllApplicants = () => {
   query["page"] = page;
   query["sort"] = sortBy + sort;
 
+  // filter?.forEach(({ name, value }: { name: string; value: any }) => {
+  //   // If the filter field already exists in the query, append its value to an array
+  //   // Otherwise, assign its value directly
+  //   if (query[name]) {
+  //     // If the filter field value is already an array, push the new value into it
+  //     // Otherwise, create a new array with the existing and new values
+  //     if (Array.isArray(query[name])) {
+  //       query[name].push(value);
+  //     } else {
+  //       query[name] = [query[name], value];
+  //     }
+  //   } else {
+  //     query[name] = value;
+  //   }
+  // });
+
+  console.log(query);
+
   const { data, isLoading, isError } = useGetAllJobsQuery({ ...query });
+
+  // console.log(query);
 
   const { data: jobData, meta } = data?.data || {};
 
@@ -32,6 +61,7 @@ const AllApplicants = () => {
     setSortBy(sortFieldBy);
   };
 
+  // count down showing
   const handleCountdown = ({
     days,
     hours,
@@ -70,6 +100,99 @@ const AllApplicants = () => {
       );
     }
   };
+
+  const filterData = [
+    {
+      label: "Category",
+      value: "category",
+      options: [
+        {
+          label: "Web Development",
+          value: "web development",
+        },
+        {
+          label: "App Development",
+          value: "app development",
+        },
+        {
+          label: "Machine Learning",
+          value: "machine learning",
+        },
+        {
+          label: "Wordpress Development",
+          value: "wordpress development",
+        },
+      ],
+    },
+    {
+      label: "Type",
+      value: "type",
+      options: [
+        {
+          label: "Full Time",
+          value: "fullTime",
+          icon: FaHandshake,
+        },
+        {
+          label: "Part Time",
+          value: "partTime",
+          icon: FaHandshake,
+        },
+        {
+          label: "Contract",
+          value: "contract",
+          icon: FaHandshake,
+        },
+        {
+          label: "Internship",
+          value: "internship",
+          icon: FaHandshake,
+        },
+        {
+          label: "Freelance",
+          value: "freelance",
+          icon: FaHandshake,
+        },
+      ],
+    },
+    {
+      label: "Location",
+      value: "location",
+      options: [
+        {
+          label: "Remote",
+          value: "remote",
+          icon: RiComputerLine,
+        },
+        {
+          label: "Onsite",
+          value: "onsite",
+          icon: PiOfficeChairFill,
+        },
+        {
+          label: "Hybrid",
+          value: "hybrid",
+          icon: IoMdSwap,
+        },
+      ],
+    },
+    {
+      label: "Urgent",
+      value: "isUrgent",
+      options: [
+        {
+          label: "Urgent",
+          value: true,
+          icon: RiComputerLine,
+        },
+        {
+          label: "Normal",
+          value: false,
+          icon: PiOfficeChairFill,
+        },
+      ],
+    },
+  ];
 
   const columns: ColumnDef<Job>[] = [
     {
@@ -250,8 +373,6 @@ const AllApplicants = () => {
         />
       ),
       cell: ({ row }) => {
-        console.log(row.getValue("status"));
-
         return (
           <div className="flex space-x-2">
             <p className="max-w-[500px] truncate font-medium capitalize">
@@ -313,9 +434,8 @@ const AllApplicants = () => {
     content = (
       <div>
         <DashboardBreadcrumb />
-
         <div className="mt-10">
-          <DataTable data={jobData} columns={columns} />
+          <DataTable data={jobData} columns={columns} filterData={filterData} reduxStateForFilter={setAllApplicantFilter} />
         </div>
       </div>
     );

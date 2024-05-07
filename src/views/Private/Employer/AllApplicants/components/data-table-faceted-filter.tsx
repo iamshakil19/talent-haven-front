@@ -1,68 +1,101 @@
-import * as React from "react"
-import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
-import { Column } from "@tanstack/react-table"
+import * as React from "react";
+import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { Column } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command"
+import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>
-  title?: string
+  column?: Column<TData, TValue>;
+  title?: string;
+  filterValue?: string;
+  reduxStateForFilter?: any;
   options: {
-    label: string
-    value: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+    label: string;
+    value: string;
+    icon?: React.ComponentType<{ className?: string }>;
+  }[];
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
+  filterValue,
   options,
+  reduxStateForFilter,
 }: DataTableFacetedFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues()
-  const selectedValues = new Set(column?.getFilterValue() as string[])
+  const dispatch = useAppDispatch();
+
+  const facets = column?.getFacetedUniqueValues();
+  const { filter: selectedValues } = useAppSelector(
+    (state) => state.job.allApplicantsTable
+  );
+
+  console.log(filterValue);
+
+  const isInclude = selectedValues?.some((value) => value.name === filterValue);
 
   return (
     <Popover>
+      {/* Old */}
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {title}
-          {selectedValues?.size > 0 && (
+          {selectedValues?.length > 0 && isInclude && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
-              <Badge
-                variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
-              >
-                {selectedValues.size}
-              </Badge>
               <div className="hidden space-x-1 lg:flex">
-                {selectedValues.size > 2 ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
-                    {selectedValues.size} selected
-                  </Badge>
-                ) : (
-                  options
-                    .filter((option) => selectedValues.has(option.value))
-                    .map((option) => (
+                {selectedValues?.filter((item) => item.name === filterValue)
+                  ?.length > 2
+                  ? isInclude && (
                       <Badge
                         variant="secondary"
-                        key={option.value}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {option.label}
+                        {
+                          selectedValues?.filter(
+                            (item) => item.name === filterValue
+                          )?.length
+                        }{" "}
+                        selected
                       </Badge>
-                    ))
-                )}
+                    )
+                  : selectedValues
+                      ?.filter((item) => item.name === filterValue)
+                      ?.map((selectedItem) => {
+                        return (
+                          selectedValues?.filter(
+                            (item) => item.name === filterValue
+                          )?.length < 3 &&
+                          isInclude && (
+                            <Badge
+                              variant="secondary"
+                              key={selectedItem.value}
+                              className="rounded-sm px-1 font-normal capitalize"
+                            >
+                              {selectedItem.label}
+                            </Badge>
+                          )
+                        );
+                      })}
               </div>
             </>
           )}
@@ -74,22 +107,19 @@ export function DataTableFacetedFilter<TData, TValue>({
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
-                const isSelected = selectedValues.has(option.value)
+              {options?.map((option) => {
+                const isSelected = selectedValues.some(
+                  (item) => item.value === option.value
+                );
+
                 return (
                   <CommandItem
                     key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value)
-                      } else {
-                        selectedValues.add(option.value)
-                      }
-                      const filterValues = Array.from(selectedValues)
-                      column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined
+                    onSelect={() =>
+                      dispatch(
+                        reduxStateForFilter({ ...option, name: filterValue })
                       )
-                    }}
+                    }
                   >
                     <div
                       className={cn(
@@ -111,10 +141,11 @@ export function DataTableFacetedFilter<TData, TValue>({
                       </span>
                     )}
                   </CommandItem>
-                )
+                );
               })}
             </CommandGroup>
-            {selectedValues.size > 0 && (
+
+            {selectedValues.length > 0 && (
               <>
                 <CommandSeparator />
                 <CommandGroup>
@@ -131,5 +162,5 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

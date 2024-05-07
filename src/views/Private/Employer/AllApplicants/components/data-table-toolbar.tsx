@@ -1,18 +1,20 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
-
-import { locations, types } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  filterData?: any;
+  reduxStateForFilter?: any;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  filterData,
+  reduxStateForFilter
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -27,31 +29,19 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-
-        {/* {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )} */}
-
-        {table.getColumn("type") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("type")}
-            title="Type"
-            options={types}
-          />
+        {filterData?.map(
+          (filterItem: any, index: number) =>
+            table.getColumn(filterItem?.value) && (
+              <DataTableFacetedFilter
+                key={index}
+                column={table.getColumn(filterItem?.value)}
+                filterValue={filterItem?.value}
+                title={filterItem?.label}
+                options={filterItem?.options}
+                reduxStateForFilter={reduxStateForFilter}
+              />
+            )
         )}
-
-        {table.getColumn("location") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("location")}
-            title="Location"
-            options={locations}
-          />
-        )}
-
         {isFiltered && (
           <Button
             variant="ghost"

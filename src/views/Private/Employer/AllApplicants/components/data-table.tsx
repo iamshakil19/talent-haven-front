@@ -16,12 +16,16 @@ import React from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  filterData?: any,
+  reduxStateForFilter?: any,
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filterData,
+  reduxStateForFilter,
 }: DataTableProps<TData, TValue>) {
 
   const [rowSelection, setRowSelection] = React.useState({})
@@ -53,11 +57,10 @@ export function DataTable<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
- 
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} filterData={filterData} reduxStateForFilter={reduxStateForFilter} />
       <div className="rounded-md border">
         <Table>
           <TableHeader className="bg-primary-gray/15">
