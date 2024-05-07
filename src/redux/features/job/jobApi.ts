@@ -19,9 +19,10 @@ const jobApi = baseApi.injectEndpoints({
       }),
     }),
     getAllJobs: builder.query({
-      query: () => ({
+      query: (arg: Record<string, any>) => ({
         url: `${JOB_URL}/all-jobs`,
         method: "GET",
+        params: arg,
       }),
       transformResponse: (response: TResponseRedux<any>) => {
         return {

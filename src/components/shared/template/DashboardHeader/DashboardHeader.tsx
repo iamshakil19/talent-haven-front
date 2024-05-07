@@ -178,7 +178,7 @@ const DashboardHeader = ({
               <Button
                 variant="ghost"
                 size="circle"
-                className="h-10 w-10 hover:bg-primary-gray/15 !ring-0 !ring-offset-0  !outline-none"
+                className="h-10 w-10 hover:bg-primary-gray/15 !ring-0 !ring-offset-0 !outline-none"
               >
                 <span className="bg-primary-red w-2 h-2 rounded-full absolute top-2 right-2.5"></span>
                 <MdNotificationsNone className="text-primary-gray" size={27} />
@@ -195,7 +195,7 @@ const DashboardHeader = ({
               <DropdownMenuGroup className="overflow-y-scroll max-h-80">
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child.png" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -211,7 +211,7 @@ const DashboardHeader = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -227,7 +227,7 @@ const DashboardHeader = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -243,7 +243,7 @@ const DashboardHeader = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -259,7 +259,7 @@ const DashboardHeader = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -275,7 +275,7 @@ const DashboardHeader = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="py-3 px-3 hover:bg-muted cursor-pointer flex items-start gap-3 border-b ">
                   <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                    <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                     <AvatarFallback className="font-semibold">
                       SA
                     </AvatarFallback>
@@ -304,7 +304,7 @@ const DashboardHeader = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="h-10 cursor-pointer w-10 bg-primary-gray/40 hover:bg-primary-gray/30 transition-all duration-300 ease-in-out flex items-center justify-center ring-1 hover:ring-2 ring-primary ring-offset-4 hover:ring-offset-2">
-                <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                 <AvatarFallback className="font-semibold">SA</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -313,7 +313,7 @@ const DashboardHeader = ({
                 <div className="flex items-center gap-3">
                   <div>
                     <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                      <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                      <AvatarImage className="" src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                       <AvatarFallback className="font-semibold">
                         SA
                       </AvatarFallback>

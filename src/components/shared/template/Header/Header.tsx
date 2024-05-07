@@ -126,7 +126,7 @@ const Header = () => {
             {token ? (
               <Link to="/dashboard" className="hidden md:block">
                 <Avatar className="h-10 cursor-pointer w-10 bg-muted hover:bg-primary-gray/30 transition-all duration-300 ease-in-out flex items-center justify-center ring-1 hover:ring-2 ring-primary ring-offset-4 hover:ring-offset-2 ml-7">
-                  <AvatarImage src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  <AvatarImage src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
                   <AvatarFallback className="font-semibold">SA</AvatarFallback>
                 </Avatar>
               </Link>

@@ -33,8 +33,12 @@ import ReactQuill from "react-quill";
 import { useAddNewJobMutation } from "@/redux/features/job/jobApi";
 import { FormFieldName, config } from "./AddNewJob.config";
 import DynamicErrorForForm from "@/components/shared/DynamicErrorForForm";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const AddNewJobForm = () => {
+
+
   const [addNewJob, { isLoading, isError, error, isSuccess }] =
     useAddNewJobMutation();
   const [isResetFrom, setResetForm] = useState(false);
@@ -52,10 +56,8 @@ const AddNewJobForm = () => {
     try {
       const { experience, ...others } = data;
       const finalData = { ...others, experience: Number(experience) };
-
-      console.log(finalData);
-
       const res = await addNewJob(finalData).unwrap();
+
       if (res) {
         toast.success("Successfully Job Added", {
           id: "addNewJob",

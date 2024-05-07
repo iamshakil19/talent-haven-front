@@ -13,6 +13,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import AddNewJob from "@/views/Private/Employer/AddNewJob";
 import ManageJobs from "@/views/Private/Employer/ManageJobs";
 import ShortListedResume from "@/views/Private/Employer/ShortListedResume";
+import AllApplicants from "@/views/Private/Employer/AllApplicants";
 export const routePaths = [
   {
     name: "Dashboard",
@@ -80,7 +81,7 @@ export const routePaths = [
       {
         name: "All Applicants",
         path: "all-applicants",
-        element: <MyResume />,
+        element: <AllApplicants />,
         icon: <GrDocumentText />,
         authority: [ROLE.EMPLOYER],
       },
