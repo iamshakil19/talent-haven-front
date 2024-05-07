@@ -2,11 +2,6 @@ import { baseApi } from "@/redux/api/baseApi";
 import { tagTypes } from "@/redux/tag-types";
 import { TResponseRedux } from "@/types";
 
-interface FullTagDescription<T = string> {
-  type: string;
-  id?: T;
-}
-
 const JOB_URL = "/job";
 
 const jobApi = baseApi.injectEndpoints({
@@ -17,6 +12,7 @@ const jobApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: [tagTypes.job],
     }),
     getAllJobs: builder.query({
       query: (arg: Record<string, any>) => ({
@@ -30,6 +26,7 @@ const jobApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: [tagTypes.job],
     }),
     getSingleJob: builder.query({
       query: (data) => ({

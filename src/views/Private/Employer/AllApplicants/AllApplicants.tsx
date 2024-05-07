@@ -1,40 +1,15 @@
 import DashboardBreadcrumb from "@/components/shared/DashboardBreadcrumb";
 import React, { useState } from "react";
 import { DataTable } from "./components/data-table";
-// import { columns } from "./components/columns";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import Loading from "@/components/shared/Loading";
 import { useGetAllJobsQuery } from "@/redux/features/job/jobApi";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TJob } from "../ManageJobs/ManageJobs";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import moment from "moment";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
 import { DataTableColumnHeader } from "./components/data-table-column-header";
-import { Badge } from "@/components/ui/badge";
 import { DataTableRowActions } from "./components/data-table-row-actions";
 import { Job } from "./data/schema";
 import { locations } from "./data/data";
+import Countdown from "react-countdown";
 
 const AllApplicants = () => {
   const query: Record<string, any> = {};
@@ -55,6 +30,45 @@ const AllApplicants = () => {
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {
     setSort(sortFieldName);
     setSortBy(sortFieldBy);
+  };
+
+  const handleCountdown = ({
+    days,
+    hours,
+    minutes,
+    // seconds,
+    completed,
+  }: {
+    days: number;
+    hours: number;
+    minutes: number;
+    // seconds: number;
+    completed: boolean;
+  }) => {
+    if (completed) {
+      return (
+        <p className="bg-secondary-red text-primary-red px-3 py-1 text-xs rounded-full tracking-wide">
+          Time Expired
+        </p>
+      );
+    } else {
+      return (
+        <p className="text-sm flex items-center justify-center gap-4">
+          <span className="flex flex-col items-center justify-center">
+            <span>{days}</span>
+            <span className="text-xs">Days</span>
+          </span>
+          <span className="flex flex-col items-center justify-center">
+            <span>{hours}</span>
+            <span className="text-xs">Hours</span>
+          </span>
+          <span className="flex flex-col items-center justify-center">
+            <span>{minutes}</span>
+            <span className="text-xs">Minutes</span>
+          </span>
+        </p>
+      );
+    }
   };
 
   const columns: ColumnDef<Job>[] = [
@@ -215,7 +229,67 @@ const AllApplicants = () => {
         return (
           <div className="flex space-x-2">
             <p className="max-w-[500px] truncate font-medium capitalize">
-              {row.getValue("isUrgent") ? <span className="bg-secondary-orange text-primary-orange rounded-full px-3 py-1 text-xs tracking-wide"> Urgent </span> : null}
+              {row.getValue("isUrgent") ? (
+                <span className="bg-secondary-orange text-primary-orange rounded-full px-3 py-1 text-xs tracking-wide">
+                  {" "}
+                  Urgent{" "}
+                </span>
+              ) : null}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title="Status"
+          onChange={handleSort}
+        />
+      ),
+      cell: ({ row }) => {
+        console.log(row.getValue("status"));
+
+        return (
+          <div className="flex space-x-2">
+            <p className="max-w-[500px] truncate font-medium capitalize">
+              {row.getValue("status") === "active" ? (
+                <span className="bg-secondary-green text-primary-green rounded-full px-3 py-1 text-xs tracking-wide">
+                  Active
+                </span>
+              ) : (
+                <span className="bg-secondary-blue text-primary-blue rounded-full px-3 py-1 text-xs tracking-wide">
+                  Close
+                </span>
+              )}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "expDate",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title="Expiry Date"
+          onChange={handleSort}
+        />
+      ),
+      cell: ({ row }) => {
+        const expDate = row.getValue("expDate") as string | number | Date;
+        const remainingTime = new Date(expDate).getTime() - Date.now();
+        return (
+          <div className="flex space-x-2">
+            <p className="max-w-[500px] truncate font-medium capitalize">
+              {
+                <Countdown
+                  date={Date.now() + remainingTime}
+                  renderer={handleCountdown}
+                ></Countdown>
+              }
             </p>
           </div>
         );
