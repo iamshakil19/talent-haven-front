@@ -57,18 +57,16 @@ const FORM_SCHEMA = z.object({
   experience: z
     .string({ required_error: "Experience is required" })
     .nonempty({ message: "Experience is required" }),
-
-
   isUrgent: z.boolean().optional(),
   salary: z.coerce
     .number({ required_error: "Salary is required" })
     .min(1, { message: "Salary must be greater than 0" }),
-
   technology: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
       message: "You have to select at least one item.",
     }),
+  expDate: z.date({ required_error: "Expiry Date is required" }),
 });
 
 const FORM_DEFAULT_VALUE = {
@@ -81,6 +79,7 @@ const FORM_DEFAULT_VALUE = {
   salary: 0,
   isUrgent: false,
   technology: [],
+  expDate: undefined,
 };
 
 export type FormFieldName =
@@ -92,7 +91,8 @@ export type FormFieldName =
   | "experience"
   | "salary"
   | "isUrgent"
-  | "technology";
+  | "technology"
+  | "expDate";
 
 const FORM_INPUTS: INPUT_SCHEMA[] = [
   {
@@ -216,6 +216,13 @@ const FORM_INPUTS: INPUT_SCHEMA[] = [
     placeholder: "Type salary",
     required: true,
     type: INPUT_TYPES.NUMBER,
+  },
+  {
+    name: "expDate",
+    label: "Expiry Date",
+    placeholder: "Select expiry date",
+    required: true,
+    type: INPUT_TYPES.SELECT,
   },
   {
     name: "technology",

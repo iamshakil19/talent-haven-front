@@ -35,10 +35,17 @@ import { FormFieldName, config } from "./AddNewJob.config";
 import DynamicErrorForForm from "@/components/shared/DynamicErrorForForm";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { addDays, format } from "date-fns";
 
 const AddNewJobForm = () => {
-
-
   const [addNewJob, { isLoading, isError, error, isSuccess }] =
     useAddNewJobMutation();
   const [isResetFrom, setResetForm] = useState(false);
@@ -55,7 +62,11 @@ const AddNewJobForm = () => {
   const onSubmit = async (data: z.infer<typeof config.FORM_SCHEMA>) => {
     try {
       const { experience, ...others } = data;
-      const finalData = { ...others, experience: Number(experience) };
+      const finalData = {
+        ...others,
+        experience: Number(experience),
+      };
+
       const res = await addNewJob(finalData).unwrap();
 
       if (res) {
@@ -108,11 +119,19 @@ const AddNewJobForm = () => {
     }
   }, [technologyValue, isSuccess]);
 
+  const [date, setDate] = React.useState<Date>();
+
+  useEffect(() => {
+    if (date) {
+      form.setValue("expDate", date);
+    }
+  }, [date]);
+
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {config.FORM_INPUTS?.map((input, index) => (
               <React.Fragment key={index}>
                 {/* Condition 1 for text */}
@@ -132,7 +151,7 @@ const AddNewJobForm = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            className="py-3"
+                            className="py-3 ring-primary-gray/15"
                             placeholder={input.placeholder}
                             type={input.type}
                             {...field}
@@ -156,7 +175,8 @@ const AddNewJobForm = () => {
 
                 {/* Condition 2 for select */}
                 {input.type === INPUT_TYPES.SELECT &&
-                  input.name !== "technology" && (
+                  input.name !== "technology" &&
+                  input.name !== "expDate" && (
                     // <div className="">
                     <FormField
                       control={form.control}
@@ -223,7 +243,6 @@ const AddNewJobForm = () => {
                   )}
 
                 {/* Condition 3 for number */}
-
                 {input.type === INPUT_TYPES.NUMBER && (
                   <FormField
                     control={form.control}
@@ -241,14 +260,17 @@ const AddNewJobForm = () => {
                         <FormControl>
                           <Input
                             min={0}
-                            className="py-3"
+                            className="py-3 ring-primary-gray/15"
                             placeholder={input.placeholder}
                             type={input.type}
                             {...field}
                             value={
                               typeof field.value === "boolean"
                                 ? ""
-                                : field.value
+                                : typeof field.value === "string" ||
+                                  typeof field.value === "number"
+                                ? field.value
+                                : ""
                             }
                           />
                         </FormControl>
@@ -264,6 +286,129 @@ const AddNewJobForm = () => {
                 )}
 
                 {/* Condition 4 for checkbox */}
+                {input.type === INPUT_TYPES.SELECT &&
+                  input.name === "technology" && (
+                    <FormField
+                      control={form.control}
+                      name={input.name}
+                      render={() => (
+                        <FormItem>
+                          <FormLabel>
+                            {input.label}{" "}
+                            {input.required && (
+                              <span className="text-primary-red text-xl ml-1">
+                                *
+                              </span>
+                            )}
+                          </FormLabel>
+                          <FormControl>
+                            <MultiSelect
+                              options={input.options}
+                              onChange={handleFrameworksChange}
+                              isResetFrom={isResetFrom}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                          <DynamicErrorForForm
+                            isError={isError}
+                            error={error}
+                            inputName={input.name}
+                          />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+                {/* Condition 5 for select */}
+                {input.type === INPUT_TYPES.SELECT &&
+                  input.name === "expDate" && (
+                    // <div className="">
+                    <FormField
+                      control={form.control}
+                      name={input?.name as FormFieldName}
+                      render={({ field }) => (
+                        <FormItem className="">
+                          <FormLabel>
+                            {input.label}{" "}
+                            {input.required && (
+                              <span className="text-primary-red text-xl ml-1">
+                                *
+                              </span>
+                            )}
+                          </FormLabel>
+                          <div className="relative">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant={"ghost"}
+                                  size={"full"}
+                                  className={cn(
+                                    " justify-start text-left font-normal bg-background h-11 hover:bg-background hover:text-primary-gray text-primary-gray ring-0 border",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+
+                                  {field.value ? (
+                                    typeof field.value === "string" ||
+                                    typeof field.value === "number" ? (
+                                      <span>{field.value}</span>
+                                    ) : field.value instanceof Date ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
+                                <Select
+                                  onValueChange={(value) =>
+                                    setDate(
+                                      addDays(new Date(), parseInt(value))
+                                    )
+                                  }
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select" />
+                                  </SelectTrigger>
+                                  <SelectContent position="popper">
+                                    <SelectItem value="1">Tomorrow</SelectItem>
+                                    <SelectItem value="3">In 3 days</SelectItem>
+                                    <SelectItem value="7">In a week</SelectItem>
+                                    <SelectItem value="10">
+                                      In 10 days
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                                <div className="rounded-md border">
+                                  <Calendar
+                                    mode="single"
+                                    selected={
+                                      field.value instanceof Date
+                                        ? field.value
+                                        : undefined
+                                    }
+                                    onSelect={field.onChange}
+                                  />
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          </div>
+                          <FormMessage />
+                          <DynamicErrorForForm
+                            isError={isError}
+                            error={error}
+                            inputName={input.name}
+                          />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+                {/* Condition 6 for checkbox */}
                 {input.type === INPUT_TYPES.CHECKBOX && (
                   <FormField
                     control={form.control}
@@ -292,7 +437,7 @@ const AddNewJobForm = () => {
                   />
                 )}
 
-                {/* Condition 5 for quill text editor */}
+                {/* Condition 7 for quill text editor */}
                 {input.type === INPUT_TYPES.TEXT &&
                   input.name === "description" && (
                     <FormField
@@ -323,39 +468,6 @@ const AddNewJobForm = () => {
                               }
                               modules={config.reactQuillModule}
                               formats={config.reactQuillFormats}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                          <DynamicErrorForForm
-                            isError={isError}
-                            error={error}
-                            inputName={input.name}
-                          />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-
-                {input.type === INPUT_TYPES.SELECT &&
-                  input.name === "technology" && (
-                    <FormField
-                      control={form.control}
-                      name={input.name}
-                      render={() => (
-                        <FormItem>
-                          <FormLabel>
-                            {input.label}{" "}
-                            {input.required && (
-                              <span className="text-primary-red text-xl ml-1">
-                                *
-                              </span>
-                            )}
-                          </FormLabel>
-                          <FormControl>
-                            <MultiSelect
-                              options={input.options}
-                              onChange={handleFrameworksChange}
-                              isResetFrom={isResetFrom}
                             />
                           </FormControl>
                           <FormMessage />

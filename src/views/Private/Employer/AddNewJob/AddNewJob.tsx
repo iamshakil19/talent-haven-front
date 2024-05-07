@@ -14,7 +14,7 @@ const AddNewJob = () => {
 
       <div className="relative">
         <div className="flex items-center justify-center py-5">
-          <div className=" grid gap-3 w-full max-w-6xl lg:border p-5 rounded-md bg-gradient-to-br from-[#f2f5fb81] to-[#eaf0fb7e]">
+          <div className=" grid gap-3 w-full lg:border p-5 rounded-md bg-gradient-to-br from-[#f2f5fb81] to-[#eaf0fb7e]">
             <div className="grid gap-2 ">
               <h1 className="text-xl font-bold text-primary">
                 {config.staticText.title}
