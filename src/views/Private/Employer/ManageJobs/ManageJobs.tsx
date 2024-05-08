@@ -3,10 +3,6 @@ import Loading from "@/components/shared/Loading";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
 import { mergeFilters } from "@/utils/margeFilters";
 import { useState } from "react";
-import { FaHandshake } from "react-icons/fa6";
-import { RiComputerLine } from "react-icons/ri";
-import { PiOfficeChairFill } from "react-icons/pi";
-import { IoMdSwap } from "react-icons/io";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Job, config } from "./MangeJobs.config";
@@ -28,6 +24,7 @@ import {
   setAllApplicantPage,
   setAllApplicantSearchTerm,
 } from "@/redux/features/job/jobSlice";
+import CountDown from "./CountDown";
 
 const ManageJobs = () => {
   const { filter, searchTerm, limit, page } = useAppSelector(
@@ -69,56 +66,6 @@ const ManageJobs = () => {
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {
     setSort(sortFieldName);
     setSortBy(sortFieldBy);
-  };
-
-  // count down showing
-  const handleCountdown = ({
-    days,
-    hours,
-    minutes,
-    // seconds,
-    completed,
-  }: {
-    days: number;
-    hours: number;
-    minutes: number;
-    // seconds: number;
-    completed: boolean;
-  }) => {
-    if (completed) {
-      return (
-        <p className="bg-secondary-red text-primary-red px-3 py-1 text-xs rounded-full tracking-wide">
-          Time Expired
-        </p>
-      );
-    } else {
-      return (
-        <p
-          className={`${
-            days >= 7
-              ? "text-primary-green"
-              : days < 7 && days > 1
-              ? "text-primary-orange"
-              : days <= 1
-              ? "text-primary-red"
-              : ""
-          } text-sm flex items-center justify-center gap-4`}
-        >
-          <span className="flex flex-col items-center justify-center">
-            <span>{days}</span>
-            <span className="text-xs">Days</span>
-          </span>
-          <span className="flex flex-col items-center justify-center">
-            <span>{hours}</span>
-            <span className="text-xs">Hours</span>
-          </span>
-          <span className="flex flex-col items-center justify-center">
-            <span>{minutes}</span>
-            <span className="text-xs">Minutes</span>
-          </span>
-        </p>
-      );
-    }
   };
 
   const columns: ColumnDef<Job>[] = [
@@ -326,7 +273,7 @@ const ManageJobs = () => {
               {
                 <Countdown
                   date={Date.now() + remainingTime}
-                  renderer={handleCountdown}
+                  renderer={CountDown}
                 ></Countdown>
               }
             </p>
