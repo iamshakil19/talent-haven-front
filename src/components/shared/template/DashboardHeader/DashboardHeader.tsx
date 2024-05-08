@@ -54,7 +54,7 @@ const DashboardHeader = ({
   const currentPath = locationPaths?.[locationPaths?.length - 1];
 
   return (
-    <header className="flex sticky top-0 z-10 bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
+    <header className="flex sticky top-0 z-50 bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
       {/* Dashboard sidebar for mobile device */}
       <Sheet>
         <SheetTrigger asChild>

@@ -18,7 +18,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -52,9 +51,8 @@ export function DataTableFacetedFilter<TData, TValue>({
 
   return (
     <Popover>
-      {/* Old */}
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 border-dashed">
+      <PopoverTrigger asChild className="">
+        <Button variant={`${isInclude ? "default" : "outline"}`} size="sm" className="h-8 border-dashed justify-start">
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.length > 0 && isInclude && (
@@ -99,7 +97,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="w-[200px] p-0 z-10" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
@@ -112,6 +110,7 @@ export function DataTableFacetedFilter<TData, TValue>({
 
                 return (
                   <CommandItem
+                  className="cursor-pointer py-1.5"
                     key={option.value}
                     onSelect={() =>
                       dispatch(
@@ -133,29 +132,10 @@ export function DataTableFacetedFilter<TData, TValue>({
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
                     <span>{option.label}</span>
-                    {facets?.get(option.value) && (
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
-                      </span>
-                    )}
                   </CommandItem>
                 );
               })}
             </CommandGroup>
-
-            {selectedValues.length > 0 && (
-              <>
-                <CommandSeparator />
-                <CommandGroup>
-                  <CommandItem
-                    onSelect={() => column?.setFilterValue(undefined)}
-                    className="justify-center text-center"
-                  >
-                    Clear filters
-                  </CommandItem>
-                </CommandGroup>
-              </>
-            )}
           </CommandList>
         </Command>
       </PopoverContent>

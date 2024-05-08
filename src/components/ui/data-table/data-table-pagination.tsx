@@ -31,13 +31,9 @@ export function DataTablePagination<TData>({
   const { page: statePage, limit: stateLimit } = useAppSelector(
     (state) => state.job.allApplicantsTable
   );
-  const { page, limit, total, totalPage } = meta || {};
-
-  console.log(totalPage);
+  const { page, total, totalPage } = meta || {};
 
   const paginationItems = Array.from({ length: totalPage }, (_, i) => i + 1);
-
-  console.log(paginationItems);
 
   const dispatch = useAppDispatch();
   return (
@@ -112,7 +108,7 @@ export function DataTablePagination<TData>({
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => dispatch(reduxStateForPage(Number(statePage + 1)))}
-            disabled={statePage === totalPage}
+            disabled={statePage === totalPage || totalPage === 0}
           >
             <span className="sr-only">Go to next page</span>
             <ChevronRightIcon className="h-4 w-4" />
@@ -122,7 +118,7 @@ export function DataTablePagination<TData>({
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => dispatch(reduxStateForPage(Number(totalPage)))}
-            disabled={statePage === totalPage}
+            disabled={statePage === totalPage || totalPage === 0}
           >
             <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />

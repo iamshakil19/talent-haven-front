@@ -1,10 +1,17 @@
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { clearAllApplicantTableFilter } from "@/redux/features/job/jobSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -21,7 +28,7 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  const { searchTerm } = useAppSelector(
+  const { searchTerm, filter } = useAppSelector(
     (state) => state.job.allApplicantsTable
   );
 
@@ -38,7 +45,34 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {filterData?.map(
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="h-8 !ring-0 !ring-offset-0 !outline-none">
+              Filter
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="center"
+            className="max-w-lg p-3 grid grid-cols-2 gap-3 z-0"
+          >
+            {filterData?.map(
+              (filterItem: any, index: number) =>
+                table.getColumn(filterItem?.value) && (
+                  <DataTableFacetedFilter
+                    key={index}
+                    column={table.getColumn(filterItem?.value)}
+                    filterValue={filterItem?.value}
+                    title={filterItem?.label}
+                    options={filterItem?.options}
+                    reduxStateForFilter={reduxStateForFilter}
+                  />
+                )
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* {filterData?.map(
           (filterItem: any, index: number) =>
             table.getColumn(filterItem?.value) && (
               <DataTableFacetedFilter
@@ -50,11 +84,11 @@ export function DataTableToolbar<TData>({
                 reduxStateForFilter={reduxStateForFilter}
               />
             )
-        )}
-        {isFiltered && (
+        )} */}
+        {(filter?.length > 0 || searchTerm) && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={() => dispatch(clearAllApplicantTableFilter())}
             className="h-8 px-2 lg:px-3"
           >
             Reset

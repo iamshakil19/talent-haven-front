@@ -53,6 +53,10 @@ const jobSlice = createSlice({
     setAllApplicantSearchTerm: (state, action) => {
       state.allApplicantsTable.searchTerm = action.payload;
     },
+    clearAllApplicantTableFilter: (state) => {
+      state.allApplicantsTable.searchTerm = "";
+      state.allApplicantsTable.filter = [];
+    },
   },
 });
 
@@ -61,6 +65,7 @@ export const {
   setAllApplicantLimit,
   setAllApplicantFilter,
   setAllApplicantSearchTerm,
+  clearAllApplicantTableFilter
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

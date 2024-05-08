@@ -8,7 +8,6 @@ import {
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
   type Table as TanstackTable,
@@ -26,12 +25,15 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   meta?: any;
   filterData?: any;
+  isRowNavigate?: boolean;
+  rowNavigateUrl?: string;
   reduxStateForPage?: any;
   reduxStateForLimit?: any;
   reduxStateForFilter?: any;
@@ -39,10 +41,12 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
-  columns,
   data,
   meta,
+  columns,
   filterData,
+  isRowNavigate,
+  rowNavigateUrl,
   reduxStateForPage,
   reduxStateForLimit,
   reduxStateForFilter,
@@ -55,6 +59,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const navigate = useNavigate();
 
   const table = useReactTable({
     data,
@@ -72,10 +77,8 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
   return (
@@ -108,21 +111,29 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {data?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const originalData = row.original as { _id: string };
+                return (
+                  <TableRow
+                    onClick={() =>
+                      isRowNavigate &&
+                      navigate(`/${rowNavigateUrl}/${originalData._id}`)
+                    }
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={`${isRowNavigate ? "cursor-pointer" : ""}`}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell
