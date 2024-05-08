@@ -37,7 +37,7 @@ const jobSlice = createSlice({
       const { label, value, name } = action.payload as {
         label: string;
         value: any;
-        name : string;
+        name: string;
       };
 
       const index = state.allApplicantsTable.filter.findIndex(
@@ -50,6 +50,9 @@ const jobSlice = createSlice({
         state.allApplicantsTable.filter.push({ label, value, name });
       }
     },
+    setAllApplicantSearchTerm: (state, action) => {
+      state.allApplicantsTable.searchTerm = action.payload;
+    },
   },
 });
 
@@ -57,6 +60,7 @@ export const {
   setAllApplicantPage,
   setAllApplicantLimit,
   setAllApplicantFilter,
+  setAllApplicantSearchTerm,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

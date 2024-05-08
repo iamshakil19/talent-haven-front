@@ -14,47 +14,44 @@ import { RiComputerLine } from "react-icons/ri";
 import { PiOfficeChairFill } from "react-icons/pi";
 import { IoMdSwap } from "react-icons/io";
 import { FaHandshake } from "react-icons/fa6";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useDebounced } from "@/redux/hooks";
 
-import { setAllApplicantFilter } from "@/redux/features/job/jobSlice";
+import {
+  setAllApplicantFilter,
+  setAllApplicantLimit,
+  setAllApplicantPage,
+  setAllApplicantSearchTerm,
+} from "@/redux/features/job/jobSlice";
 
 const AllApplicants = () => {
-  const { filter } = useAppSelector((state) => state.job.allApplicantsTable);
+  const { filter, searchTerm, limit, page } = useAppSelector(
+    (state) => state.job.allApplicantsTable
+  );
 
   const query: Record<string, any> = {};
 
-  const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
   const [sort, setSort] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
 
-  query["limit"] = size;
+  query["limit"] = limit;
   query["page"] = page;
   query["sort"] = sortBy + sort;
 
-  // filter?.forEach(({ name, value }: { name: string; value: any }) => {
-  //   // If the filter field already exists in the query, append its value to an array
-  //   // Otherwise, assign its value directly
-  //   if (query[name]) {
-  //     // If the filter field value is already an array, push the new value into it
-  //     // Otherwise, create a new array with the existing and new values
-  //     if (Array.isArray(query[name])) {
-  //       query[name].push(value);
-  //     } else {
-  //       query[name] = [query[name], value];
-  //     }
-  //   } else {
-  //     query[name] = value;
-  //   }
-  // });
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
 
   console.log(query);
 
   const { data, isLoading, isError } = useGetAllJobsQuery({ ...query });
 
-  // console.log(query);
-
   const { data: jobData, meta } = data?.data || {};
+console.log(jobData);
 
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {
     setSort(sortFieldName);
@@ -429,13 +426,22 @@ const AllApplicants = () => {
   } else if (!isLoading && isError) {
     content = <p className="text-primary-red">There was an error</p>;
   } else if (!isLoading && !isError && jobData?.length === 0) {
-    <div>No product found</div>;
+    <div>No Job Found found</div>;
   } else if (!isLoading && !isError && jobData?.length > 0) {
     content = (
       <div>
         <DashboardBreadcrumb />
         <div className="mt-10">
-          <DataTable data={jobData} columns={columns} filterData={filterData} reduxStateForFilter={setAllApplicantFilter} />
+          <DataTable
+            meta={meta}
+            data={jobData}
+            columns={columns}
+            filterData={filterData}
+            reduxStateForPage={setAllApplicantPage}
+            reduxStateForLimit={setAllApplicantLimit}
+            reduxStateForFilter={setAllApplicantFilter}
+            reduxStateForSearchTerm={setAllApplicantSearchTerm}
+          />
         </div>
       </div>
     );

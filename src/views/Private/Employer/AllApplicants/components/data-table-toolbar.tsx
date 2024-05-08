@@ -4,28 +4,37 @@ import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   filterData?: any;
   reduxStateForFilter?: any;
+  reduxStateForSearchTerm?: any;
 }
 
 export function DataTableToolbar<TData>({
   table,
   filterData,
-  reduxStateForFilter
+  reduxStateForFilter,
+  reduxStateForSearchTerm,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const { searchTerm } = useAppSelector(
+    (state) => state.job.allApplicantsTable
+  );
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Search ..."
+          value={searchTerm}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            dispatch(reduxStateForSearchTerm(event.target.value))
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />

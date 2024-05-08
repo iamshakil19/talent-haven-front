@@ -1,5 +1,18 @@
-
-import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable, type Table as TanstackTable } from "@tanstack/react-table"
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type Table as TanstackTable,
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -15,26 +28,33 @@ import { DataTableToolbar } from "./data-table-toolbar";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[],
-  filterData?: any,
-  reduxStateForFilter?: any,
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  meta?: any;
+  filterData?: any;
+  reduxStateForPage?: any;
+  reduxStateForLimit?: any;
+  reduxStateForFilter?: any;
+  reduxStateForSearchTerm?: any;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  meta,
   filterData,
+  reduxStateForPage,
+  reduxStateForLimit,
   reduxStateForFilter,
+  reduxStateForSearchTerm,
 }: DataTableProps<TData, TValue>) {
-
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -52,15 +72,20 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+  });
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} filterData={filterData} reduxStateForFilter={reduxStateForFilter} />
+      <DataTableToolbar
+        table={table}
+        filterData={filterData}
+        reduxStateForFilter={reduxStateForFilter}
+        reduxStateForSearchTerm={reduxStateForSearchTerm}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader className="bg-primary-gray/15">
@@ -82,7 +107,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {data?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -111,7 +136,12 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        meta={meta}
+        reduxStateForPage={reduxStateForPage}
+        reduxStateForLimit={reduxStateForLimit}
+      />
     </div>
   );
 }

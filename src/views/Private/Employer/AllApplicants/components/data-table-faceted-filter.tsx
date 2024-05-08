@@ -48,8 +48,6 @@ export function DataTableFacetedFilter<TData, TValue>({
     (state) => state.job.allApplicantsTable
   );
 
-  console.log(filterValue);
-
   const isInclude = selectedValues?.some((value) => value.name === filterValue);
 
   return (
