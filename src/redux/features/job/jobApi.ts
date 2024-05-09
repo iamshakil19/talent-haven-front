@@ -28,6 +28,22 @@ const jobApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.job],
     }),
+    
+    getMyAllJobs: builder.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${JOB_URL}/all-my-jobs`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+      providesTags: [tagTypes.job],
+    }),
+
     getSingleJob: builder.query({
       query: (data) => ({
         url: `${JOB_URL}/${data.id}`,
@@ -57,4 +73,5 @@ export const {
   useGetAllJobsQuery,
   useGetSingleJobQuery,
   useUpdateJobMutation,
+  useGetMyAllJobsQuery
 } = jobApi;

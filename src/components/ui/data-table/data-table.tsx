@@ -112,12 +112,12 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {data?.length ? (
               table.getRowModel().rows.map((row) => {
-                const originalData = row.original as { _id: string };
+                const originalData = row.original as { slug: string };
                 return (
                   <TableRow
                     onClick={() =>
                       isRowNavigate &&
-                      navigate(`/${rowNavigateUrl}/${originalData._id}`)
+                      navigate(`/${rowNavigateUrl}/${originalData.slug}`)
                     }
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}

@@ -22,7 +22,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { routePaths } from "@/routes/all.routes";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
@@ -33,6 +33,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdNotificationsNone } from "react-icons/md";
 import { IoMailOpenOutline } from "react-icons/io5";
+import logout from "@/redux/features/auth/authActions";
 
 const DashboardHeader = ({
   isCollapsed,

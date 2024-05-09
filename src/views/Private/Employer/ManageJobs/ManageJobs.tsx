@@ -1,6 +1,7 @@
 import {
   useDeleteJobMutation,
   useGetAllJobsQuery,
+  useGetMyAllJobsQuery,
 } from "@/redux/features/job/jobApi";
 import Loading from "@/components/shared/Loading";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
@@ -11,12 +12,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Job, config } from "./MangeJobs.config";
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
 import Countdown from "react-countdown";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import DashboardBreadcrumb from "@/components/shared/DashboardBreadcrumb";
@@ -74,9 +69,10 @@ const ManageJobs = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading, isError } = useGetAllJobsQuery({ ...query });
+  const { data, isLoading, isError } = useGetMyAllJobsQuery({ ...query });
 
   const { data: jobData, meta } = data?.data || {};
+  console.log(jobData);
 
   // For Table sort
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {
@@ -327,37 +323,6 @@ const ManageJobs = () => {
       id: "actions",
       cell: ({ row }) => {
         return (
-          // <DropdownMenu>
-          //   <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-          //     <Button
-          //       variant="ghost"
-          //       className="flex h-8 w-8 p-0 data-[state=open]:bg-muted !ring-0 !ring-offset-0 !outline-none"
-          //     >
-          //       <DotsHorizontalIcon className="h-4 w-4" />
-          //       <span className="sr-only">Open menu</span>
-          //     </Button>
-          //   </DropdownMenuTrigger>
-          //   <DropdownMenuContent
-          //     align="end"
-          //     className="w-[160px]"
-          //     onClick={(e) => e.stopPropagation()}
-          //   >
-          //     {config.actionMenu?.map((item, index) => (
-          //       <DropdownMenuItem
-          //         onClick={() => handleAction(item.value, row.original._id)}
-          //         key={index}
-          //         className={`${
-          //           item.value === "delete"
-          //             ? "text-primary-red bg-secondary-red focus:text-background duration-300 focus:bg-primary-red"
-          //             : ""
-          //         } my-1 cursor-pointer`}
-          //       >
-          //         {item.label}
-          //       </DropdownMenuItem>
-          //     ))}
-          //   </DropdownMenuContent>
-          // </DropdownMenu>
-
           <Popover>
             <PopoverTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button

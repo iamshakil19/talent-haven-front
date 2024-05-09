@@ -6,6 +6,7 @@ import { ROLE } from "@/types";
 export type TUser = {
   email: string;
   role: ROLE;
+  id: string;
   iat: number;
   exp: number;
 };
@@ -29,14 +30,14 @@ const authSlice = createSlice({
       state.user = user;
       state.token = token;
     },
-    logout: (state) => {
+    authLogout: (state) => {
       state.user = null;
       state.token = null;
     },
   },
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, authLogout } = authSlice.actions;
 
 export default authSlice.reducer;
 
