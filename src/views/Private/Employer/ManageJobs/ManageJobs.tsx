@@ -1,4 +1,7 @@
-import { useGetAllJobsQuery } from "@/redux/features/job/jobApi";
+import {
+  useDeleteJobMutation,
+  useGetAllJobsQuery,
+} from "@/redux/features/job/jobApi";
 import Loading from "@/components/shared/Loading";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
 import { mergeFilters } from "@/utils/margeFilters";
@@ -26,10 +29,18 @@ import {
 } from "@/redux/features/job/jobSlice";
 import CountDown from "./CountDown";
 import AlertModal from "@/components/ui/alert-modal";
+import { toast } from "sonner";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const ManageJobs = () => {
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [jobId, setJobId] = useState<string>("");
+
+  const [deleteJob] = useDeleteJobMutation();
 
   const { filter, searchTerm, limit, page } = useAppSelector(
     (state) => state.job.allApplicantsTable
@@ -67,15 +78,18 @@ const ManageJobs = () => {
 
   const { data: jobData, meta } = data?.data || {};
 
+  // For Table sort
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {
     setSort(sortFieldName);
     setSortBy(sortFieldBy);
   };
 
-  const handleAction = (value: string) => {
+  // For Table action button
+  const handleAction = (value: string, rowId: string) => {
     switch (value) {
       case "delete":
-        setOpenDeleteModal(true);
+        setOpenModal(true);
+        setJobId(rowId);
         break;
 
       default:
@@ -83,8 +97,16 @@ const ManageJobs = () => {
     }
   };
 
-  const deleteJobHandler = () => {
-    console.log("Delete");
+  const deleteJobHandler = async () => {
+    try {
+      const res = await deleteJob({ id: jobId });
+      if (res) {
+        toast.success("Deleted successfully");
+        setOpenModal(false);
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+    }
   };
 
   const columns: ColumnDef<Job>[] = [
@@ -305,8 +327,39 @@ const ManageJobs = () => {
       id: "actions",
       cell: ({ row }) => {
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+          // <DropdownMenu>
+          //   <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+          //     <Button
+          //       variant="ghost"
+          //       className="flex h-8 w-8 p-0 data-[state=open]:bg-muted !ring-0 !ring-offset-0 !outline-none"
+          //     >
+          //       <DotsHorizontalIcon className="h-4 w-4" />
+          //       <span className="sr-only">Open menu</span>
+          //     </Button>
+          //   </DropdownMenuTrigger>
+          //   <DropdownMenuContent
+          //     align="end"
+          //     className="w-[160px]"
+          //     onClick={(e) => e.stopPropagation()}
+          //   >
+          //     {config.actionMenu?.map((item, index) => (
+          //       <DropdownMenuItem
+          //         onClick={() => handleAction(item.value, row.original._id)}
+          //         key={index}
+          //         className={`${
+          //           item.value === "delete"
+          //             ? "text-primary-red bg-secondary-red focus:text-background duration-300 focus:bg-primary-red"
+          //             : ""
+          //         } my-1 cursor-pointer`}
+          //       >
+          //         {item.label}
+          //       </DropdownMenuItem>
+          //     ))}
+          //   </DropdownMenuContent>
+          // </DropdownMenu>
+
+          <Popover>
+            <PopoverTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button
                 variant="ghost"
                 className="flex h-8 w-8 p-0 data-[state=open]:bg-muted !ring-0 !ring-offset-0 !outline-none"
@@ -314,27 +367,27 @@ const ManageJobs = () => {
                 <DotsHorizontalIcon className="h-4 w-4" />
                 <span className="sr-only">Open menu</span>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
+            </PopoverTrigger>
+            <PopoverContent
               align="end"
-              className="w-[160px]"
+              className="w-[160px] p-2"
               onClick={(e) => e.stopPropagation()}
             >
               {config.actionMenu?.map((item, index) => (
-                <DropdownMenuItem
-                  onClick={() => handleAction(item.value)}
+                <p
+                  onClick={() => handleAction(item.value, row.original._id)}
                   key={index}
                   className={`${
                     item.value === "delete"
-                      ? "text-primary-red bg-secondary-red focus:text-background duration-300 focus:bg-primary-red"
-                      : ""
-                  } my-1 cursor-pointer`}
+                      ? "text-primary-red bg-secondary-red hover:text-background duration-300 hover:bg-primary-red"
+                      : "hover:bg-muted"
+                  } my-1 cursor-pointer py-1.5 px-2 rounded-md text-sm`}
                 >
                   {item.label}
-                </DropdownMenuItem>
+                </p>
               ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </PopoverContent>
+          </Popover>
         );
       },
     },
@@ -373,8 +426,8 @@ const ManageJobs = () => {
               remove your data from our servers.
             </p>
           }
-          isOpen={openDeleteModal}
-          onClose={() => setOpenDeleteModal(false)}
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
           onOk={deleteJobHandler}
         />
       </div>

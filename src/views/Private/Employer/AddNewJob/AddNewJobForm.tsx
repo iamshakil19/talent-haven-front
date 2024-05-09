@@ -33,8 +33,6 @@ import ReactQuill from "react-quill";
 import { useAddNewJobMutation } from "@/redux/features/job/jobApi";
 import { FormFieldName, config } from "./AddNewJob.config";
 import DynamicErrorForForm from "@/components/shared/DynamicErrorForForm";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import {
   Popover,
   PopoverContent,
@@ -61,10 +59,15 @@ const AddNewJobForm = () => {
 
   const onSubmit = async (data: z.infer<typeof config.FORM_SCHEMA>) => {
     try {
+
+      const uniqueSuffix = Date.now() + "-" + Math.floor(Math.random() * 1e9);
+      const slug = data.title.replace(/[\s,&$#@*]+/g, "-").toLowerCase() + uniqueSuffix
+
       const { experience, ...others } = data;
       const finalData = {
         ...others,
         experience: Number(experience),
+        slug
       };
 
       const res = await addNewJob(finalData).unwrap();
@@ -131,7 +134,7 @@ const AddNewJobForm = () => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {config.FORM_INPUTS?.map((input, index) => (
               <React.Fragment key={index}>
                 {/* Condition 1 for text */}

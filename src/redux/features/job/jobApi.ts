@@ -46,6 +46,7 @@ const jobApi = baseApi.injectEndpoints({
         url: `${JOB_URL}/${data.id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [tagTypes.job],
     }),
   }),
 });

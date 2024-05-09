@@ -14,6 +14,7 @@ const jobSchema = z.object({
   description: z.string(),
   expDate: z.string(),
   status: z.string(),
+  slug: z.string(),
   experience: z.number(),
   isUrgent: z.boolean(),
   views: z.number(),
@@ -35,6 +36,7 @@ export type TJob = {
   technology: string[];
   salary: number;
   location: string;
+  slug: string;
   isUrgent: boolean;
   id: string;
   experience: number;
