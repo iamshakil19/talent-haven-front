@@ -25,8 +25,12 @@ import {
   setAllApplicantSearchTerm,
 } from "@/redux/features/job/jobSlice";
 import CountDown from "./CountDown";
+import AlertModal from "@/components/ui/alert-modal";
 
 const ManageJobs = () => {
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [jobId, setJobId] = useState<string>("");
+
   const { filter, searchTerm, limit, page } = useAppSelector(
     (state) => state.job.allApplicantsTable
   );
@@ -68,6 +72,21 @@ const ManageJobs = () => {
     setSortBy(sortFieldBy);
   };
 
+  const handleAction = (value: string) => {
+    switch (value) {
+      case "delete":
+        setOpenDeleteModal(true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const deleteJobHandler = () => {
+    console.log("Delete");
+  };
+
   const columns: ColumnDef<Job>[] = [
     {
       id: "_id",
@@ -86,6 +105,7 @@ const ManageJobs = () => {
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
+          onClick={(e) => e.stopPropagation()}
           aria-label="Select row"
           className="translate-y-[2px]"
         />
@@ -286,7 +306,7 @@ const ManageJobs = () => {
       cell: ({ row }) => {
         return (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button
                 variant="ghost"
                 className="flex h-8 w-8 p-0 data-[state=open]:bg-muted !ring-0 !ring-offset-0 !outline-none"
@@ -295,13 +315,24 @@ const ManageJobs = () => {
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px]">
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Make a copy</DropdownMenuItem>
-              <DropdownMenuItem>Favorite</DropdownMenuItem>
-              <DropdownMenuItem className="text-primary-red bg-secondary-red focus:text-background duration-300 cursor-pointer focus:bg-primary-red">
-                Delete
-              </DropdownMenuItem>
+            <DropdownMenuContent
+              align="end"
+              className="w-[160px]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {config.actionMenu?.map((item, index) => (
+                <DropdownMenuItem
+                  onClick={() => handleAction(item.value)}
+                  key={index}
+                  className={`${
+                    item.value === "delete"
+                      ? "text-primary-red bg-secondary-red focus:text-background duration-300 focus:bg-primary-red"
+                      : ""
+                  } my-1 cursor-pointer`}
+                >
+                  {item.label}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -333,6 +364,19 @@ const ManageJobs = () => {
             reduxStateForSearchTerm={setAllApplicantSearchTerm}
           />
         </div>
+
+        <AlertModal
+          title={<p className="text-primary-red">Are you absolutely sure?</p>}
+          description={
+            <p className="text-primary-orange">
+              This action cannot be undone. This will permanently delete and
+              remove your data from our servers.
+            </p>
+          }
+          isOpen={openDeleteModal}
+          onClose={() => setOpenDeleteModal(false)}
+          onOk={deleteJobHandler}
+        />
       </div>
     );
   }

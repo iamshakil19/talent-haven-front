@@ -162,6 +162,18 @@ const tableFilterData = [
   },
 ];
 
+const actionMenu = [
+  {
+    label: "Edit",
+    value: "edit",
+  },
+  {
+    label: "Delete",
+    value: "delete",
+  },
+];
+
 export const config = {
   tableFilterData,
+  actionMenu,
 };
