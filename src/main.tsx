@@ -19,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <TooltipProvider delayDuration={100}>
         {/* <SocketClient /> */}
+        
         <App />
         <Toaster richColors position="top-center" />
       </TooltipProvider>

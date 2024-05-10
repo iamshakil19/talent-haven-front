@@ -8,8 +8,57 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
-const JobListCard = () => {
+import { IJob } from "@/interface";
+import moment from "moment";
+
+const JobListCard = ({ job }: { job: IJob }) => {
+  const {
+    _id,
+    category,
+    location,
+    salary,
+    title,
+    slug,
+    isUrgent,
+    type,
+    employer,
+    createdAt,
+  } = job || {};
+
+  console.log(employer);
+
+  let typeName = type;
+
+  switch (type) {
+    case "partTime":
+      typeName = "Part Time";
+      break;
+    case "fullTime":
+      typeName = "Full Time";
+      break;
+
+    default:
+      break;
+  }
+
   const navigate = useNavigate();
+
+  // Time formation
+  const duration = moment.duration(moment().diff(moment(createdAt)));
+  const formattedDuration = duration.humanize();
+
+  // Name splitting
+
+  const nameParts = employer?.name?.split(" ");
+
+  let shortName = "";
+  nameParts.forEach((part: string) => {
+    if (part.length > 1) {
+      shortName += part.charAt(0).toUpperCase();
+    } else {
+      shortName += part.toUpperCase();
+    }
+  });
 
   const user = useAppSelector(selectCurrentUser);
 
@@ -38,15 +87,18 @@ const JobListCard = () => {
 
   return (
     <Card
-      onClick={() => navigate(`/jobs/${"software-engineer-983456"}`)}
+      onClick={() => navigate(`/jobs/${slug}`)}
       className="hover:shadow-lg cursor-pointer hover:shadow-primary-gray/10 transition-all duration-300"
     >
       <CardContent className="p-7 flex gap-3">
         <div>
-          <img
-            src="https://superio-reactjs.ibthemespro.com/images/resource/company-logo/1-1.png"
-            alt=""
-          />
+          {employer?.profile?.profileImage ? (
+            <img src={employer?.profile?.profileImage} alt="" />
+          ) : (
+            <div className="bg-primary-gray/30 p-2 rounded-md h-11 w-12 flex justify-center items-center">
+              {shortName}
+            </div>
+          )}
         </div>
         <div className="flex flex-col justify-between gap-4 relative w-full">
           <span
@@ -56,37 +108,45 @@ const JobListCard = () => {
             <PiBookmarkSimpleThin className="text-lg" />
           </span>
 
-          <p className="font-medium hover:text-primary duration-300 transition-all ease-in-out cursor-pointer max-w-sm">
-            Software Engineer (Android), Libraries
+          <p className="font-medium hover:text-primary duration-300 transition-all ease-in-out cursor-pointer max-w-sm capitalize">
+            {title}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <p className="flex items-center gap-1 text-primary-gray">
               <PiBuildingsLight size={19} />
-              <span className="text-sm">Segment</span>
+              <span className="text-sm capitalize">{employer.name}</span>
             </p>
-            <p className="flex items-center gap-1 text-primary-gray">
-              <IoLocationOutline size={19} />
-              <span className="text-sm">London, UK</span>
-            </p>
+            {employer?.profile?.address ? (
+              <p className="flex items-center gap-1 text-primary-gray">
+                <IoLocationOutline size={19} />
+                <span className="text-sm">
+                  {employer?.profile?.address?.length > 15
+                    ? employer?.profile?.address?.slice(0, 15) + "..."
+                    : employer?.profile?.address}
+                </span>
+              </p>
+            ) : null}
             <p className="flex items-center gap-1 text-primary-gray">
               <BsClock />
-              <span className="text-sm">11 hours ago</span>
+              <span className="text-sm">{formattedDuration} ago</span>
             </p>
             <p className="flex items-center gap-1 text-primary-gray">
               <LiaMoneyBillWaveSolid size={19} />
-              <span className="text-sm">35k - 45k</span>
+              <span className="text-sm">{salary}</span>
             </p>
           </div>
           <div className="flex h-fit items-center gap-4 flex-wrap">
-            <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-blue text-primary-blue">
-              Full Time
+            <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-blue text-primary-blue capitalize">
+              {typeName}
             </span>
-            <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-green text-primary-green">
-              Private
+            <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-green text-primary-green capitalize">
+              {location}
             </span>
-            <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-orange text-primary-orange">
-              Urgent
-            </span>
+            {isUrgent ? (
+              <span className="px-4 py-[5px] tracking-wide rounded-full text-xs bg-secondary-orange text-primary-orange">
+                Urgent
+              </span>
+            ) : null}
           </div>
         </div>
       </CardContent>

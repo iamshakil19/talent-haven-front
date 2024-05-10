@@ -19,6 +19,7 @@ import { IoFilterSharp } from "react-icons/io5";
 import JobFilterSidebar from "./JobFilterSidebar";
 import Recruit from "../Home/components/Recruit";
 import PageHeader, { IPageHeaderType } from "@/components/shared/PageHeader";
+import ScrollToTop from "@/utils/scrollToTop";
 
 const Jobs = () => {
   const [limit, setLimit] = useState<number>(0);
@@ -30,6 +31,7 @@ const Jobs = () => {
 
   return (
     <div className="">
+      <ScrollToTop />
       <Button
         isRipple
         className="flex items-center gap-2 lg:hidden justify-center fixed bottom-5 left-[50%] -translate-x-2/4 z-10"

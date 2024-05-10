@@ -22,6 +22,7 @@ const jobSchema = z.object({
   salary: z.number(),
   technology: z.array(z.string()),
   employer: z.any(),
+  profile: z.any(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -42,6 +43,7 @@ export type TJob = {
   experience: number;
   description: string;
   employer: any;
+  profile: any;
   expDate: string;
   status: string;
   views: number;

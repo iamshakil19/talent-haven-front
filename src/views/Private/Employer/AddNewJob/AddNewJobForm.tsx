@@ -61,7 +61,7 @@ const AddNewJobForm = () => {
     try {
 
       const uniqueSuffix = Date.now() + "-" + Math.floor(Math.random() * 1e9);
-      const slug = data.title.replace(/[\s,&$#@*]+/g, "-").toLowerCase() + uniqueSuffix
+      const slug = data.title.replace(/[\s,&$#@*]+/g, "-").toLowerCase() + "-" + uniqueSuffix
 
       const { experience, ...others } = data;
       const finalData = {
