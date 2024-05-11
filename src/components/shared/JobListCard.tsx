@@ -10,6 +10,8 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { IJob } from "@/interface";
 import moment from "moment";
+// import { Avatar } from "@components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const JobListCard = ({ job }: { job: IJob }) => {
   const {
@@ -92,13 +94,16 @@ const JobListCard = ({ job }: { job: IJob }) => {
     >
       <CardContent className="p-7 flex gap-3">
         <div>
-          {employer?.profile?.profileImage ? (
-            <img src={employer?.profile?.profileImage} alt="" />
-          ) : (
-            <div className="bg-primary-gray/30 p-2 rounded-md h-11 w-12 flex justify-center items-center">
+          <Avatar className="rounded-md w-11 h-11 bg-primary-gray/30">
+            <AvatarImage
+              className="rounded-md"
+              src={employer?.profile?.profileImage}
+              alt="Company logo"
+            />
+            <AvatarFallback className="bg-primary-gray/30 rounded-md">
               {shortName}
-            </div>
-          )}
+            </AvatarFallback>
+          </Avatar>
         </div>
         <div className="flex flex-col justify-between gap-4 relative w-full">
           <span
