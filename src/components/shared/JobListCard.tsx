@@ -12,6 +12,7 @@ import { IJob } from "@/interface";
 import moment from "moment";
 // import { Avatar } from "@components/ui/avatar";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { NumericFormat } from "react-number-format";
 
 const JobListCard = ({ job }: { job: IJob }) => {
   const {
@@ -26,8 +27,6 @@ const JobListCard = ({ job }: { job: IJob }) => {
     employer,
     createdAt,
   } = job || {};
-
-  console.log(employer);
 
   let typeName = type;
 
@@ -54,8 +53,8 @@ const JobListCard = ({ job }: { job: IJob }) => {
   const nameParts = employer?.name?.split(" ");
 
   let shortName = "";
-  nameParts.forEach((part: string) => {
-    if (part.length > 1) {
+  nameParts?.forEach((part: string) => {
+    if (part?.length > 1) {
       shortName += part.charAt(0).toUpperCase();
     } else {
       shortName += part.toUpperCase();
@@ -119,14 +118,18 @@ const JobListCard = ({ job }: { job: IJob }) => {
           <div className="flex items-center gap-4 flex-wrap">
             <p className="flex items-center gap-1 text-primary-gray">
               <PiBuildingsLight size={19} />
-              <span className="text-sm capitalize">{employer.name}</span>
+              <span className="text-sm capitalize">
+                {employer?.name?.length > 8
+                  ? employer?.name?.slice(0, 8) + "..."
+                  : employer?.name}
+              </span>
             </p>
             {employer?.profile?.address ? (
               <p className="flex items-center gap-1 text-primary-gray">
                 <IoLocationOutline size={19} />
                 <span className="text-sm">
-                  {employer?.profile?.address?.length > 15
-                    ? employer?.profile?.address?.slice(0, 15) + "..."
+                  {employer?.profile?.address?.length > 8
+                    ? employer?.profile?.address?.slice(0, 8) + "..."
                     : employer?.profile?.address}
                 </span>
               </p>
@@ -137,7 +140,12 @@ const JobListCard = ({ job }: { job: IJob }) => {
             </p>
             <p className="flex items-center gap-1 text-primary-gray">
               <LiaMoneyBillWaveSolid size={19} />
-              <span className="text-sm">{salary}</span>
+              <NumericFormat
+                value={salary}
+                thousandSeparator
+                displayType="text"
+                className="text-sm w-20"
+              />
             </p>
           </div>
           <div className="flex h-fit items-center gap-4 flex-wrap">

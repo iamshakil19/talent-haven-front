@@ -18,12 +18,43 @@ import { Button } from "@/components/ui/button";
 import { IoFilterSharp } from "react-icons/io5";
 import JobFilterSidebar from "./JobFilterSidebar";
 import Recruit from "../Home/components/Recruit";
-import PageHeader, { IPageHeaderType } from "@/components/shared/PageHeader";
+import PageHeader, {
+  IPageHeaderType,
+} from "@/components/shared/pageHeader/PageHeader";
 import ScrollToTop from "@/utils/scrollToTop";
+import Loading from "@/components/shared/Loading";
+import Error from "@/components/shared/Error";
+import { useNavigate } from "react-router-dom";
+import { useGetAllJobsQuery } from "@/redux/features/job/jobApi";
+import { IJob } from "@/interface";
 
 const Jobs = () => {
   const [limit, setLimit] = useState<number>(0);
   const [sort, setSort] = useState<string | number>();
+
+  const { data, isLoading, isError } = useGetAllJobsQuery({});
+
+  const { data: jobData } = data?.data || {};
+
+  let content = null;
+
+  if (isLoading) {
+    content = <Loading />;
+  } else if (!isLoading && isError) {
+    content = <Error message="There was an error" />;
+  } else if (!isLoading && !isError && jobData?.length === 0) {
+    <div>No job found</div>;
+  } else if (!isLoading && !isError && jobData?.length > 0) {
+    content = (
+      <div>
+        <div className="mt-20 grid gap-5 grid-cols-1 md:grid-cols-2">
+          {jobData?.map((job: IJob) => (
+            <JobListCard key={job._id} job={job} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     // console.log(limit, sort);
@@ -92,12 +123,7 @@ const Jobs = () => {
                 </Select>
               </div>
             </div>
-
-            <div className="mt-10 grid gap-5 grid-cols-1 md:grid-cols-2">
-              {config.PopularJobCategories?.map((item: IPopularJobCategory) => (
-                <JobListCard key={item.id} />
-              ))}
-            </div>
+            <div>{content}</div>
           </div>
         </div>
       </Container>

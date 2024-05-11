@@ -46,7 +46,7 @@ const jobApi = baseApi.injectEndpoints({
 
     getSingleJob: builder.query({
       query: (data) => ({
-        url: `${JOB_URL}/${data.id}`,
+        url: `${JOB_URL}/${data.slug}`,
         method: "GET",
       }),
     }),

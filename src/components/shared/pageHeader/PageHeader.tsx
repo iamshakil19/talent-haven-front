@@ -1,4 +1,4 @@
-import Container from "./Container";
+import Container from "../Container";
 
 import {
   Breadcrumb,
@@ -6,12 +6,18 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
+
+import PageHeaderForJob from "./PageHeaderForJob";
 
 export enum IPageHeaderType {
   DEFAULT = "default",
   CANDIDATE = "candidate",
   EMPLOYER = "employer",
+  JOB = "job",
 }
 
 const PageHeader = ({
@@ -21,8 +27,14 @@ const PageHeader = ({
   type: IPageHeaderType;
   data?: any;
 }) => {
+  const navigate = useNavigate();
+  const user = useAppSelector(selectCurrentUser);
+
+  // For Breadcrumbs
   const location = useLocation();
   const paths = location.pathname.split("/").filter((path) => path !== "");
+
+  // For Job header
 
   let content;
 
@@ -65,10 +77,13 @@ const PageHeader = ({
     case "employer":
       content = <div>This is employee</div>;
       break;
+    case "job":
+      content = <PageHeaderForJob data={data} user={user} />;
+      break;
   }
   return (
     <div>
-      <div className="p-10 bg-[#e4eafe]">
+      <div className="p-10 bg-gradient-to-tl from-[#f3f6ff8c] to-[#e4eafe] ">
         <Container>{content}</Container>
       </div>
     </div>

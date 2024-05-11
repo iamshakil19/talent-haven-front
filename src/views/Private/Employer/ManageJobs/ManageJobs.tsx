@@ -72,7 +72,6 @@ const ManageJobs = () => {
   const { data, isLoading, isError } = useGetMyAllJobsQuery({ ...query });
 
   const { data: jobData, meta } = data?.data || {};
-  console.log(jobData);
 
   // For Table sort
   const handleSort = (sortFieldName: string, sortFieldBy: string) => {

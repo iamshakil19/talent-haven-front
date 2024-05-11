@@ -17,8 +17,6 @@ const FeaturedJobs = () => {
 
   const { data: jobData } = data?.data || {};
 
-  console.log(jobData);
-
   let content = null;
 
   if (isLoading) {
