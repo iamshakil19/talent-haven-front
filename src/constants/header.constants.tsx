@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { AiOutlineHome } from "react-icons/ai";
-import { RiQuestionFill, RiQuestionLine } from "react-icons/ri";
 import { TbInfoCircle, TbInfoCircleFilled } from "react-icons/tb";
 import {
   PiBagSimpleFill,

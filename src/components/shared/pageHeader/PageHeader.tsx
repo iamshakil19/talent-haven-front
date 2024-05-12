@@ -6,7 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
@@ -27,7 +27,6 @@ const PageHeader = ({
   type: IPageHeaderType;
   data?: any;
 }) => {
-  const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
 
   // For Breadcrumbs

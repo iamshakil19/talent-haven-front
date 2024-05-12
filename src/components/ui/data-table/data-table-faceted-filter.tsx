@@ -34,7 +34,6 @@ interface DataTableFacetedFilterProps<TData, TValue> {
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
-  column,
   title,
   filterValue,
   options,
@@ -42,7 +41,6 @@ export function DataTableFacetedFilter<TData, TValue>({
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const dispatch = useAppDispatch();
 
-  const facets = column?.getFacetedUniqueValues();
   const { filter: selectedValues } = useAppSelector(
     (state) => state.job.allApplicantsTable
   );

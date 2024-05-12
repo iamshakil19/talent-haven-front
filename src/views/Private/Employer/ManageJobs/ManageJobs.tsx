@@ -1,6 +1,5 @@
 import {
   useDeleteJobMutation,
-  useGetAllJobsQuery,
   useGetMyAllJobsQuery,
 } from "@/redux/features/job/jobApi";
 import Loading from "@/components/shared/Loading";

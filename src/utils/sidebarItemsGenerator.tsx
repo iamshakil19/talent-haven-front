@@ -2,6 +2,7 @@ import { TSidebarItem, TRoutePath } from "@/types";
 
 export const sidebarItemsGenerator = (items: TRoutePath[], role: string) => {
   const sidebarItems = items.reduce((acc: TSidebarItem[], item) => {
+    // @ts-ignore
     if (item.authority && item.authority.includes(role)) {
       if (item.path && item.name) {
         acc.push({
@@ -14,6 +15,7 @@ export const sidebarItemsGenerator = (items: TRoutePath[], role: string) => {
       // filtering nested children
       if (item.children) {
         const filteredChildren = item.children.filter((child) =>
+          // @ts-ignore
           child.authority ? child.authority.includes(role) : true
         );
         acc.push({

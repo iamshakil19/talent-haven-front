@@ -16,8 +16,6 @@ import { NumericFormat } from "react-number-format";
 
 const JobListCard = ({ job }: { job: IJob }) => {
   const {
-    _id,
-    category,
     location,
     salary,
     title,
@@ -65,7 +63,6 @@ const JobListCard = ({ job }: { job: IJob }) => {
 
   const handleBookmark = (e: any) => {
     e.stopPropagation();
-    const id = "1";
 
     if (!user) {
       navigate("/login");

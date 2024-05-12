@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -6,11 +8,9 @@ import {
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
-  getFacetedUniqueValues,
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
-  type Table as TanstackTable,
 } from "@tanstack/react-table";
 
 import {

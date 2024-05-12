@@ -1,4 +1,3 @@
-import React from "react";
 
 const RelatedJobs = ({ technology }: { technology: string[] }) => {
   console.log(technology);

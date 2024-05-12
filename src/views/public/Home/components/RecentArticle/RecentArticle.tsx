@@ -1,7 +1,5 @@
 import Container from "@/components/shared/Container";
-import React from "react";
 import { IArticle, config } from "./RecentArticle.config";
-import { Card, CardContent } from "@/components/ui/card";
 import ArticleCard from "./ArticleCard";
 
 const RecentArticle = () => {

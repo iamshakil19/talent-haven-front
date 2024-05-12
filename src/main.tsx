@@ -4,7 +4,6 @@ import "./index.css";
 import { Toaster } from "@/components/ui/sonner";
 import Loading from "./components/shared/Loading";
 import { TooltipProvider } from "./components/ui/tooltip";
-import SocketClient from "./utils/socket";
 
 const App = lazy(() => import("./App"));
 

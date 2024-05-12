@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { toast } from "sonner";
 import { ROLE } from "@/types";
 
 export type TUser = {

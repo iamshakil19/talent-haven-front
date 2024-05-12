@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import useScrollPosition from "@/utils/useScrollPosition";
-import { TfiMenu } from "react-icons/tfi";
 import headerItems from "@/constants/header.constants";
 import { LiaUser } from "react-icons/lia";
 import { Menu } from "lucide-react";

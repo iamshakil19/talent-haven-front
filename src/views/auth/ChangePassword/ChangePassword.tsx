@@ -1,5 +1,4 @@
 import DashboardBreadcrumb from "@/components/shared/DashboardBreadcrumb";
-import { useAppDispatch } from "@/redux/hooks";
 import { config } from "./ChangePassword.config";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,11 +16,9 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
-import { TUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 
 const ChangePassword = () => {
-  const dispatch = useAppDispatch();
   const [oldPasswordToggle, setOldPasswordToggle] = useState<boolean>(false);
   const [newPasswordToggle, setNewPasswordToggle] = useState<boolean>(false);
   const [changePassword, { isLoading, isError, error }] =

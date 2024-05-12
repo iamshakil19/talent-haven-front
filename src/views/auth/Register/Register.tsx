@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { RegisterConfig } from "./Register.config";
 
 import { z } from "zod";

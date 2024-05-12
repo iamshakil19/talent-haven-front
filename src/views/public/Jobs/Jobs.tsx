@@ -4,11 +4,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import JobListCard from "@/components/shared/JobListCard";
 import { Button } from "@/components/ui/button";
 import { IoFilterSharp } from "react-icons/io5";
@@ -20,7 +19,6 @@ import PageHeader, {
 import ScrollToTop from "@/utils/scrollToTop";
 import Loading from "@/components/shared/Loading";
 import Error from "@/components/shared/Error";
-import { useNavigate } from "react-router-dom";
 import { useGetAllJobsQuery } from "@/redux/features/job/jobApi";
 import { IJob } from "@/interface";
 import { useAppDispatch, useAppSelector, useDebounced } from "@/redux/hooks";
@@ -74,7 +72,7 @@ const Jobs = () => {
 
   const { data: jobData, meta } = data?.data || {};
 
-  const { page, total, totalPage } = meta || {};
+  const { page, totalPage } = meta || {};
 
   const paginationItems = Array.from({ length: totalPage }, (_, i) => i + 1);
 

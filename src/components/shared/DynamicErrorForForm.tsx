@@ -1,4 +1,3 @@
-import React from "react";
 
 const DynamicErrorForForm = ({isError, error, inputName}: {isError: any, error: any, inputName: any}) => {
   return (

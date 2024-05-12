@@ -1,8 +1,4 @@
 import Container from "@/components/shared/Container";
-import {
-  IPopularJobCategory,
-  config,
-} from "../PopularCategories/PopularCategories.config";
 import JobListCard from "@/components/shared/JobListCard";
 import { useGetAllJobsQuery } from "@/redux/features/job/jobApi";
 import Loading from "@/components/shared/Loading";

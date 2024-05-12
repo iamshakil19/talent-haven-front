@@ -39,7 +39,7 @@ const MultiSelect = ({ options, onChange, isResetFrom }: Props) => {
   );
 
   const handleSelect = useCallback(
-    (value: string, label: string) => {
+    (value: string) => {
       setInputValue("");
       setSelected((prev) => [...prev, value]);
       if (onChange) onChange([...selected, value]);
@@ -138,7 +138,7 @@ const MultiSelect = ({ options, onChange, isResetFrom }: Props) => {
                       e.preventDefault();
                       e.stopPropagation();
                     }}
-                    onSelect={() => handleSelect(option.value, option.label)}
+                    onSelect={() => handleSelect(option.value)}
                     className="cursor-pointer"
                   >
                     {option.label}

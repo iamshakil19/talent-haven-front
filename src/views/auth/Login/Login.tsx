@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { LoginConfig } from "./Login.config";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";

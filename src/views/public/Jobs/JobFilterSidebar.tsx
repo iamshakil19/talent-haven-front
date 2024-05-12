@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -6,7 +6,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -21,12 +20,8 @@ import {
   setAllJobsFilter,
   setAllJobsSearchTerm,
 } from "@/redux/features/job/jobSlice";
-import { SelectIcon } from "@radix-ui/react-select";
-import { Check } from "lucide-react";
-import * as SelectPrimitive from "@radix-ui/react-select";
 
 const JobFilterSidebar = () => {
-  const [category, setCategory] = useState<string>("");
 
   const dispatch = useAppDispatch();
 

@@ -1,12 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import React from "react";
 import { IArticle, config } from "./RecentArticle.config";
 import { GoDotFill } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { RiArrowRightSLine } from "react-icons/ri";
 const ArticleCard = ({ data }: { data: IArticle }) => {
 
-  const { id, img, date, comments, title, description } = data || {};
+  const { img, date, comments, title, description } = data || {};
 
   return (
     <div className="group w-full max-w-md mx-auto">

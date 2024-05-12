@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Card, CardContent } from "../../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { PiBookmarkSimpleThin, PiBuildingsLight } from "react-icons/pi";
@@ -6,13 +6,10 @@ import { IoLocationOutline } from "react-icons/io5";
 import { BsClock } from "react-icons/bs";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import moment from "moment";
-import { toast } from "sonner";
 import { Button } from "../../ui/button";
-import { useNavigate } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 
-const PageHeaderForJob = ({ data, user }: { data: any; user: any }) => {
-  const navigate = useNavigate();
+const PageHeaderForJob = ({ data }: { data: any; user: any }) => {
 
   let typeName = data?.type;
 
@@ -45,28 +42,28 @@ const PageHeaderForJob = ({ data, user }: { data: any; user: any }) => {
     }
   });
 
-  const handleBookmark = (e: any) => {
-    e.stopPropagation();
-    const id = "1";
+  // const handleBookmark = (e: any) => {
+  //   e.stopPropagation();
+  //   const id = "1";
 
-    if (!user) {
-      navigate("/login");
-      toast.warning("You must be logged in", {
-        id: "bookmark",
-        duration: 2000,
-      });
-    } else if (user && user?.role !== "candidate") {
-      toast.warning("Only candidate can bookmark this job", {
-        id: "bookmark",
-        duration: 2000,
-      });
-    } else {
-      toast.success("Successfully Bookmarked", {
-        id: "bookmark",
-        duration: 2000,
-      });
-    }
-  };
+  //   if (!user) {
+  //     navigate("/login");
+  //     toast.warning("You must be logged in", {
+  //       id: "bookmark",
+  //       duration: 2000,
+  //     });
+  //   } else if (user && user?.role !== "candidate") {
+  //     toast.warning("Only candidate can bookmark this job", {
+  //       id: "bookmark",
+  //       duration: 2000,
+  //     });
+  //   } else {
+  //     toast.success("Successfully Bookmarked", {
+  //       id: "bookmark",
+  //       duration: 2000,
+  //     });
+  //   }
+  // };
 
   return (
     <Card className=" transition-all duration-300 bg-transparent shadow-none border-none">

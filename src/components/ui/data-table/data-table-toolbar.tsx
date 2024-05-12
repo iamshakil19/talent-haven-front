@@ -1,4 +1,4 @@
-import { Cross2Icon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
@@ -9,7 +9,6 @@ import { clearAllApplicantTableFilter } from "@/redux/features/job/jobSlice";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -26,7 +25,6 @@ export function DataTableToolbar<TData>({
   reduxStateForFilter,
   reduxStateForSearchTerm,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
 
   const { searchTerm, filter } = useAppSelector(
     (state) => state.job.allApplicantsTable
