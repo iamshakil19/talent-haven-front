@@ -15,14 +15,26 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CiSearch } from "react-icons/ci";
 import { PiBagSimpleThin } from "react-icons/pi";
+import { config } from "./Jobs.config";
+import { useAppDispatch } from "@/redux/hooks";
+import {
+  setAllJobsFilter,
+  setAllJobsSearchTerm,
+} from "@/redux/features/job/jobSlice";
+import { SelectIcon } from "@radix-ui/react-select";
+import { Check } from "lucide-react";
+import * as SelectPrimitive from "@radix-ui/react-select";
 
 const JobFilterSidebar = () => {
   const [category, setCategory] = useState<string>("");
+
+  const dispatch = useAppDispatch();
+
   return (
     <div className="bg-[#f3f6ff8c] hidden lg:block p-6 rounded-md">
       <div className="grid w-full max-w-sm items-center gap-3">
         <Label htmlFor="search" className="font-medium text-base">
-          Search By Keywords
+          {config.jobFilter.search.label}
         </Label>
 
         <div className="relative">
@@ -30,64 +42,57 @@ const JobFilterSidebar = () => {
           <Input
             type="text"
             id="search"
-            placeholder="Job title, keywords"
+            onChange={(e) => dispatch(setAllJobsSearchTerm(e.target.value))}
+            placeholder={config.jobFilter.search.placeholder}
             className="!ring-1 py-3 pl-10"
           />
         </div>
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-3 mt-7">
-        <Label className="font-medium text-base">Category</Label>
+        <Label className="font-medium text-base">
+          {config.jobFilter.category.label}
+        </Label>
         <div className="relative">
           <PiBagSimpleThin className="absolute left-3 text-muted-foreground text-xl top-[50%] -translate-y-2/4" />
-          <Select onValueChange={(e) => setCategory(e)}>
+          <Select
+            onValueChange={(e) =>
+              dispatch(
+                setAllJobsFilter({
+                  name: config.jobFilter.category.name,
+                  value: e,
+                })
+              )
+            }
+          >
             <SelectTrigger className="py-3 pl-10">
-              <SelectValue placeholder="Choose a category" />
+              <SelectValue
+                placeholder={config.jobFilter.category.placeholder}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {/* <SelectLabel>Per Page</SelectLabel> */}
-                <SelectItem value="residential">Residential</SelectItem>
-                <SelectItem value="commercial">Commercial</SelectItem>
-                <SelectItem value="industrial">Industrial</SelectItem>
+                {config.jobFilter.category.options?.map((option, index) => (
+                  <SelectItem key={index} value={option.value} >
+                    {option.label}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
       </div>
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
-        <Label className="text-base">Job type</Label>
+        <Label className="text-base">{config.jobFilter.type.label}</Label>
 
-        <div className="flex items-center space-x-2">
-          <Switch id="Full-Time" className="h-5 w-10" />
-          <Label htmlFor="Full-Time" className="cursor-pointer">
-            Full Time
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="Part-Time" className="h-5 w-10" />
-          <Label htmlFor="Part-Time" className="cursor-pointer">
-            Part Time
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="contract" className="h-5 w-10" />
-          <Label htmlFor="contract" className="cursor-pointer">
-            Contract
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="internship" className="h-5 w-10" />
-          <Label htmlFor="internship" className="cursor-pointer">
-            Internship
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="Freelance" className="h-5 w-10" />
-          <Label htmlFor="Freelance" className="cursor-pointer">
-            Freelance
-          </Label>
-        </div>
+        {config.jobFilter.type.options?.map((option, index) => (
+          <div key={index} className="flex items-center space-x-2">
+            <Switch id={option.value} className="h-5 w-10" />
+            <Label htmlFor={option.value} className="cursor-pointer">
+              {option.label}
+            </Label>
+          </div>
+        ))}
       </div>
 
       <RadioGroup

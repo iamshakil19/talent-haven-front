@@ -71,20 +71,6 @@ export function DataTableToolbar<TData>({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* {filterData?.map(
-          (filterItem: any, index: number) =>
-            table.getColumn(filterItem?.value) && (
-              <DataTableFacetedFilter
-                key={index}
-                column={table.getColumn(filterItem?.value)}
-                filterValue={filterItem?.value}
-                title={filterItem?.label}
-                options={filterItem?.options}
-                reduxStateForFilter={reduxStateForFilter}
-              />
-            )
-        )} */}
         {(filter?.length > 0 || searchTerm) && (
           <Button
             variant="ghost"
