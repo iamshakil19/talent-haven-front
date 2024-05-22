@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../shared/template/Sidebar/Sidebar";
 import DashboardHeader from "../shared/template/DashboardHeader";
 import { useState } from "react";
+import Sidebar from "../shared/template/Sidebar";
 
 const AuthLayout = () => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);

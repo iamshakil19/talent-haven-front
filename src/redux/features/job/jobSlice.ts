@@ -5,7 +5,7 @@ export interface FilterItem {
   name?: string;
 }
 
-interface AllApplicantsTable {
+interface IInitialState {
   allApplicantsTable: {
     limit: number;
     page: number;
@@ -20,7 +20,7 @@ interface AllApplicantsTable {
   };
 }
 
-const initialState: AllApplicantsTable = {
+const initialState: IInitialState = {
   allApplicantsTable: {
     limit: 10,
     page: 1,

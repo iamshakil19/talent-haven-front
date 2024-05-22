@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,7 +26,6 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { routePaths } from "@/routes/all.routes";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
-import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Dispatch } from "@reduxjs/toolkit";
 import { LifeBuoy, LogOut, Menu, Settings, User } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -314,7 +313,10 @@ const DashboardHeader = ({
                 <div className="flex items-center gap-3">
                   <div>
                     <Avatar className="h-10 w-10 bg-primary-gray/40 transition-all duration-300 ease-in-out flex items-center justify-center shadow-lg">
-                      <AvatarImage className="" src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais" />
+                      <AvatarImage
+                        className=""
+                        src="https://img.freepik.com/free-photo/portrait-businessman-with-glasses-mustache-3d-rendering_1142-43442.jpg?size=626&ext=jpg&ga=GA1.1.155489672.1712106982&semt=ais"
+                      />
                       <AvatarFallback className="font-semibold">
                         SA
                       </AvatarFallback>

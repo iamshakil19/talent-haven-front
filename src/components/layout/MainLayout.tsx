@@ -5,7 +5,7 @@ const MainLayout = () => {
   return (
     <div>
       <div className="sticky top-0 z-50">
-        <p className="bg-muted-foreground text-center text-background py-1">🚧 Site Under Construction 🚧 Thanks for your patience!</p>
+        <p className="bg-muted-foreground text-center text-background py-1">🚧 SITE STILL UNDER DEVELOPMENT 🚧 Thanks for your patience!</p>
         <Header />
       </div>
       <div>
