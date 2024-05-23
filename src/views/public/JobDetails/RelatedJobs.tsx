@@ -1,7 +1,6 @@
 
 const RelatedJobs = ({ technology }: { technology: string[] }) => {
   console.log(technology);
-
   return (
     <div>
       <p className="text-2xl">Related Jobs</p>
