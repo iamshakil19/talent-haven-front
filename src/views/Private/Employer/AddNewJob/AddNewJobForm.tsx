@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { INPUT_TYPES } from "@/constants/InputTypes";
 import { Switch } from "@/components/ui/switch";
@@ -58,15 +58,17 @@ const AddNewJobForm = () => {
 
   const onSubmit = async (data: z.infer<typeof config.FORM_SCHEMA>) => {
     try {
-
       const uniqueSuffix = Date.now() + "-" + Math.floor(Math.random() * 1e9);
-      const slug = data.title.replace(/[\s,&$#@*]+/g, "-").toLowerCase() + "-" + uniqueSuffix
+      const slug =
+        data.title.replace(/[\s,&$#@*]+/g, "-").toLowerCase() +
+        "-" +
+        uniqueSuffix;
 
       const { experience, ...others } = data;
       const finalData = {
         ...others,
         experience: Number(experience),
-        slug
+        slug,
       };
 
       const res = await addNewJob(finalData).unwrap();
@@ -446,7 +448,7 @@ const AddNewJobForm = () => {
                       control={form.control}
                       name={input?.name as FormFieldName}
                       render={({ field }) => (
-                        <FormItem className="col-span-full">
+                        <FormItem className="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4">
                           <FormLabel>
                             {input.label}{" "}
                             {input.required && (
