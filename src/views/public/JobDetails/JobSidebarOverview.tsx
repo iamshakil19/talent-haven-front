@@ -3,7 +3,7 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { IoLocationOutline } from "react-icons/io5";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { NumericFormat } from "react-number-format";
-import { MdOutlineWorkOutline, MdWorkOutline } from "react-icons/md";
+import { MdOutlineWorkOutline } from "react-icons/md";
 import moment from "moment";
 import { IJob } from "@/interface";
 import { RiUserStarLine } from "react-icons/ri";

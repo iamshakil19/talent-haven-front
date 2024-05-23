@@ -1,5 +1,4 @@
 import { GrSearch } from "react-icons/gr";
-import { SlLocationPin } from "react-icons/sl";
 import { TfiEmail } from "react-icons/tfi";
 import { PiBagSimpleLight } from "react-icons/pi";
 import { FaCheckCircle } from "react-icons/fa";

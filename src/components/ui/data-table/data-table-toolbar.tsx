@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { clearAllApplicantTableFilter } from "@/redux/features/job/jobSlice";
 import {
   DropdownMenu,
