@@ -1,13 +1,14 @@
-
 import { CiCalendar } from "react-icons/ci";
 import { GiSandsOfTime } from "react-icons/gi";
 import { IoLocationOutline } from "react-icons/io5";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { NumericFormat } from "react-number-format";
-import { MdOutlineWorkOutline } from "react-icons/md";
+import { MdOutlineWorkOutline, MdWorkOutline } from "react-icons/md";
 import moment from "moment";
+import { IJob } from "@/interface";
+import { RiUserStarLine } from "react-icons/ri";
 
-const JobSidebarOverview = ({ job }: { job: any }) => {
+const JobSidebarOverview = ({ job }: { job: IJob }) => {
   const duration = moment.duration(moment().diff(moment(job?.createdAt)));
   const formattedDuration = duration.humanize();
 
@@ -27,7 +28,7 @@ const JobSidebarOverview = ({ job }: { job: any }) => {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-7">
+      <div className="flex gap-4 mt-5">
         <div className="text-primary">
           <GiSandsOfTime size={25} />
         </div>
@@ -39,7 +40,19 @@ const JobSidebarOverview = ({ job }: { job: any }) => {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-7">
+      <div className="flex gap-4 mt-5">
+        <div className="text-primary">
+          <RiUserStarLine size={25} />
+        </div>
+        <div>
+          <p>Experience</p>
+          <p className="text-sm mt-1 text-primary-gray capitalize">
+            {job?.experience} Years
+          </p>
+        </div>
+      </div>
+
+      <div className="flex gap-4 mt-5">
         <div className="text-primary">
           <IoLocationOutline size={25} />
         </div>
@@ -51,7 +64,7 @@ const JobSidebarOverview = ({ job }: { job: any }) => {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-7">
+      <div className="flex gap-4 mt-5">
         <div className="text-primary">
           <LiaMoneyBillWaveSolid size={25} />
         </div>
@@ -67,7 +80,7 @@ const JobSidebarOverview = ({ job }: { job: any }) => {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-7">
+      <div className="flex gap-4 mt-5">
         <div className="text-primary">
           <MdOutlineWorkOutline size={25} />
         </div>
