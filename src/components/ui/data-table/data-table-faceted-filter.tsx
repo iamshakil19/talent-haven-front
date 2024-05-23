@@ -19,12 +19,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
   filterValue?: string;
+  stateData?: any;
   reduxStateForFilter?: any;
   options: {
     label: string;
@@ -35,30 +36,35 @@ interface DataTableFacetedFilterProps<TData, TValue> {
 
 export function DataTableFacetedFilter<TData, TValue>({
   title,
+  stateData,
   filterValue,
   options,
   reduxStateForFilter,
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const dispatch = useAppDispatch();
+  const { filter: selectedValues } = stateData || {};
 
-  const { filter: selectedValues } = useAppSelector(
-    (state) => state.job.allApplicantsTable
+  const isInclude = selectedValues?.some(
+    (value: any) => value.name === filterValue
   );
-
-  const isInclude = selectedValues?.some((value) => value.name === filterValue);
 
   return (
     <Popover>
       <PopoverTrigger asChild className="">
-        <Button variant={`${isInclude ? "default" : "outline"}`} size="sm" className="h-8 border-dashed justify-start">
+        <Button
+          variant={`${isInclude ? "default" : "outline"}`}
+          size="sm"
+          className="h-8 border-dashed justify-start"
+        >
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.length > 0 && isInclude && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <div className="hidden space-x-1 lg:flex">
-                {selectedValues?.filter((item) => item.name === filterValue)
-                  ?.length > 2
+                {selectedValues?.filter(
+                  (item: any) => item.name === filterValue
+                )?.length > 2
                   ? isInclude && (
                       <Badge
                         variant="secondary"
@@ -66,18 +72,18 @@ export function DataTableFacetedFilter<TData, TValue>({
                       >
                         {
                           selectedValues?.filter(
-                            (item) => item.name === filterValue
+                            (item: any) => item.name === filterValue
                           )?.length
                         }{" "}
                         selected
                       </Badge>
                     )
                   : selectedValues
-                      ?.filter((item) => item.name === filterValue)
-                      ?.map((selectedItem) => {
+                      ?.filter((item: any) => item.name === filterValue)
+                      ?.map((selectedItem: any) => {
                         return (
                           selectedValues?.filter(
-                            (item) => item.name === filterValue
+                            (item: any) => item.name === filterValue
                           )?.length < 3 &&
                           isInclude && (
                             <Badge
@@ -103,12 +109,12 @@ export function DataTableFacetedFilter<TData, TValue>({
             <CommandGroup>
               {options?.map((option) => {
                 const isSelected = selectedValues.some(
-                  (item) => item.value === option.value
+                  (item: any) => item.value === option.value
                 );
 
                 return (
                   <CommandItem
-                  className="cursor-pointer py-1.5"
+                    className="cursor-pointer py-1.5"
                     key={option.value}
                     onSelect={() =>
                       dispatch(

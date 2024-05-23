@@ -15,6 +15,7 @@ import {
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   filterData?: any;
+  stateData?: any;
   reduxStateForFilter?: any;
   reduxStateForSearchTerm?: any;
 }
@@ -22,13 +23,12 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
   table,
   filterData,
+  stateData,
   reduxStateForFilter,
   reduxStateForSearchTerm,
 }: DataTableToolbarProps<TData>) {
 
-  const { searchTerm, filter } = useAppSelector(
-    (state) => state.job.allApplicantsTable
-  );
+  const { searchTerm, filter } = stateData || {};
 
   const dispatch = useAppDispatch();
 
@@ -59,6 +59,7 @@ export function DataTableToolbar<TData>({
                 table.getColumn(filterItem?.value) && (
                   <DataTableFacetedFilter
                     key={index}
+                    stateData={stateData}
                     column={table.getColumn(filterItem?.value)}
                     filterValue={filterItem?.value}
                     title={filterItem?.label}

@@ -32,6 +32,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   meta?: any;
   filterData?: any;
+  stateData?: any;
   isRowNavigate?: boolean;
   rowNavigateUrl?: string;
   reduxStateForPage?: any;
@@ -44,6 +45,7 @@ export function DataTable<TData, TValue>({
   data,
   meta,
   columns,
+  stateData,
   filterData,
   isRowNavigate,
   rowNavigateUrl,
@@ -85,6 +87,7 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <DataTableToolbar
         table={table}
+        stateData={stateData}
         filterData={filterData}
         reduxStateForFilter={reduxStateForFilter}
         reduxStateForSearchTerm={reduxStateForSearchTerm}

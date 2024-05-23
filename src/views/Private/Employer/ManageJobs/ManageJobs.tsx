@@ -36,9 +36,11 @@ const ManageJobs = () => {
 
   const [deleteJob] = useDeleteJobMutation();
 
-  const { filter, searchTerm, limit, page } = useAppSelector(
+  const jobTableStateData = useAppSelector(
     (state) => state.job.allApplicantsTable
   );
+
+  const { filter, searchTerm, limit, page } = jobTableStateData || {};
 
   const mergedFilters = mergeFilters(filter);
 
@@ -373,6 +375,7 @@ const ManageJobs = () => {
             columns={columns}
             isRowNavigate={true}
             rowNavigateUrl={"jobs"}
+            stateData={jobTableStateData}
             filterData={config.tableFilterData}
             reduxStateForPage={setAllApplicantPage}
             reduxStateForLimit={setAllApplicantLimit}
