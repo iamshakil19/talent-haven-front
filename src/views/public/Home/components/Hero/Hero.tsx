@@ -5,8 +5,14 @@ import { PiBagSimpleLight } from "react-icons/pi";
 import { FaCheckCircle } from "react-icons/fa";
 import { config } from "./Hero.config";
 import { Button } from "@/components/ui/button";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setAllJobsSearchTerm } from "@/redux/features/job/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const dispatch = useAppDispatch();
+  const { searchTerm } = useAppSelector((state) => state.job.allJobsPage);
+  const navigate = useNavigate();
   return (
     <div
       className="bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB] flex items-center gap-5 justify-between px-5 overflow-hidden"
@@ -25,36 +31,27 @@ const Hero = () => {
             {config.STATIC_TEXT.SUB_HEADING}
           </p>
 
-          <form className="lg:bg-white lg:px-8 w-full py-6 rounded-lg lg:shadow-sm flex flex-col lg:flex-row justify-between gap-5">
+          <div className="lg:bg-white lg:px-7 w-full max-w-lg py-5 rounded-lg lg:shadow-sm flex flex-col lg:flex-row justify-between gap-5">
             <div className="flex gap-1 items-center w-full bg-white py-3 px-5 lg:p-0 rounded-md shadow-sm lg:shadow-none">
               <GrSearch className="text-gray-500 text-2xl" />
               <input
+                onChange={(e) => dispatch(setAllJobsSearchTerm(e.target.value))}
+                value={searchTerm}
                 type="text"
-                placeholder="Job title or keyword"
+                placeholder="Job title or location"
                 className="focus:outline-none p-2 w-full text-lg"
               />
             </div>
-
-            <div className="hidden lg:block h-auto w-1 border-r-2 border-gray-200"></div>
-
-            <div className="flex gap-1 items-center w-full bg-white py-3 px-5 lg:p-0 rounded-md shadow-sm lg:shadow-none">
-              <SlLocationPin className="text-gray-500 text-2xl" />
-              <input
-                type="text"
-                placeholder="City or postcode"
-                className="focus:outline-none p-2 w-full text-lg"
-              />
-            </div>
-
             <div className="w-full lg:w-fit mt-5 lg:mt-0">
               <Button
+                onClick={() => navigate("/jobs")}
                 isRipple
                 className="h-12 w-full"
               >
                 {config.STATIC_TEXT.FIND_JOBS_BTN_TEXT}
               </Button>
             </div>
-          </form>
+          </div>
           <div>
             <p className="text-sm flex flex-wrap gap-2 mt-5 text-gray-500">
               <span className="font-semibold">

@@ -70,6 +70,54 @@ const jobFilter = {
       },
     ],
   },
+  location: {
+    label: "Location",
+    name: "location",
+    options: [
+      {
+        label: "Remote",
+        value: "remote",
+      },
+      {
+        label: "Onsite",
+        value: "onsite",
+      },
+      {
+        label: "Hybrid",
+        value: "hybrid",
+      },
+    ],
+  },
+  experience: {
+    label: "Experience",
+    name: "experience",
+    options: [
+      {
+        label: "Fresher",
+        value: "0",
+      },
+      {
+        label: "1 Year",
+        value: "1",
+      },
+      {
+        label: "2 Years",
+        value: "2",
+      },
+      {
+        label: "3 Years",
+        value: "3",
+      },
+      {
+        label: "4 Years",
+        value: "4",
+      },
+      {
+        label: "5 Or ++",
+        value: "5",
+      },
+    ],
+  },
 };
 
 export const config = { jobFilter };

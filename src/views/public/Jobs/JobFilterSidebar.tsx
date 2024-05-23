@@ -1,32 +1,73 @@
-
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CiSearch } from "react-icons/ci";
-import { PiBagSimpleThin } from "react-icons/pi";
 import { config } from "./Jobs.config";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   setAllJobsFilter,
   setAllJobsSearchTerm,
 } from "@/redux/features/job/jobSlice";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+
+import { RxChevronDown } from "react-icons/rx";
+import { useEffect, useState } from "react";
+import { mergeFilters } from "@/utils/margeFilters";
 
 const JobFilterSidebar = () => {
-
   const dispatch = useAppDispatch();
+
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+
+  const handleCategoryChange = (data: string) => {
+    setSelectedCategory((prevCategories) => {
+      if (prevCategories.includes(data)) {
+        return prevCategories.filter((category) => category !== data);
+      } else {
+        return [...prevCategories, data];
+      }
+    });
+  };
+
+  const isCategorySelected = (category: string): boolean => {
+    return selectedCategory.includes(category);
+  };
+
+  const { searchTerm, filter } = useAppSelector(
+    (state) => state.job.allJobsPage
+  );
+
+  const mergedFilters = mergeFilters(filter);
+
+  const categoryArray = mergedFilters?.category?.split(",");
+
+  useEffect(() => {
+    if (categoryArray?.length > 0) {
+      setSelectedCategory((prevCategories) => {
+        const newCategories = categoryArray.filter(
+          (category) => !prevCategories.includes(category)
+        );
+        return [...prevCategories, ...newCategories];
+      });
+    } else {
+      setSelectedCategory([]);
+    }
+  }, [mergedFilters?.category]);
+
+  const jobTypeArray = mergedFilters?.type?.split(",");
+  const locationArray = mergedFilters?.location?.split(",");
+  const experienceArray = mergedFilters?.experience?.split(",");
 
   return (
     <div className="bg-[#f3f6ff8c] hidden lg:block p-6 rounded-md">
+      {/* Search */}
       <div className="grid w-full max-w-sm items-center gap-3">
         <Label htmlFor="search" className="font-medium text-base">
           {config.jobFilter.search.label}
@@ -37,6 +78,7 @@ const JobFilterSidebar = () => {
           <Input
             type="text"
             id="search"
+            value={searchTerm}
             onChange={(e) => dispatch(setAllJobsSearchTerm(e.target.value))}
             placeholder={config.jobFilter.search.placeholder}
             className="!ring-1 py-3 pl-10"
@@ -44,45 +86,64 @@ const JobFilterSidebar = () => {
         </div>
       </div>
 
+      {/* Category Filter */}
       <div className="grid w-full max-w-sm items-center gap-3 mt-7">
         <Label className="font-medium text-base">
           {config.jobFilter.category.label}
         </Label>
         <div className="relative">
-          <PiBagSimpleThin className="absolute left-3 text-muted-foreground text-xl top-[50%] -translate-y-2/4" />
-          <Select
-            onValueChange={(e) =>
-              dispatch(
-                setAllJobsFilter({
-                  name: config.jobFilter.category.name,
-                  value: e,
-                })
-              )
-            }
-          >
-            <SelectTrigger className="py-3 pl-10">
-              <SelectValue
-                placeholder={config.jobFilter.category.placeholder}
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {config.jobFilter.category.options?.map((option, index) => (
-                  <SelectItem key={index} value={option.value} >
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="!ring-0 !ring-offset-0 h-11 !outline-none border justify-between !bg-white w-full hover:bg-transparent"
+              >
+                <span className="text-sm font-normal">Category</span>{" "}
+                <RxChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              {config.jobFilter.category.options?.map((option, index) => (
+                <DropdownMenuCheckboxItem
+                  key={index}
+                  checked={isCategorySelected(option.value)}
+                  onCheckedChange={() => {
+                    dispatch(
+                      setAllJobsFilter({
+                        ...option,
+                        name: config.jobFilter.category.name,
+                      })
+                    );
+                    handleCategoryChange(option.value);
+                  }}
+                >
+                  {option.label}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
+
+      {/* Job Type Filter */}
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
         <Label className="text-base">{config.jobFilter.type.label}</Label>
 
         {config.jobFilter.type.options?.map((option, index) => (
           <div key={index} className="flex items-center space-x-2">
-            <Switch id={option.value} className="h-5 w-10" />
+            <Switch
+              defaultChecked={jobTypeArray?.includes(option.value)}
+              id={option.value}
+              onCheckedChange={() =>
+                dispatch(
+                  setAllJobsFilter({
+                    ...option,
+                    name: config.jobFilter.type.name,
+                  })
+                )
+              }
+              className="h-5 w-10"
+            />
             <Label htmlFor={option.value} className="cursor-pointer">
               {option.label}
             </Label>
@@ -90,7 +151,7 @@ const JobFilterSidebar = () => {
         ))}
       </div>
 
-      <RadioGroup
+      {/* <RadioGroup
         defaultValue="all"
         className="grid w-full max-w-sm items-center gap-5 mt-7"
       >
@@ -131,68 +192,58 @@ const JobFilterSidebar = () => {
             Last 30 Days
           </Label>
         </div>
-      </RadioGroup>
+      </RadioGroup> */}
 
+      {/* Location Filter */}
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
-        <Label className="text-base">Location</Label>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="remote" />
-          <Label htmlFor="remote" className="cursor-pointer">
-            Remote
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="onsite" />
-          <Label htmlFor="onsite" className="cursor-pointer">
-            Onsite
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="hybrid" />
-          <Label htmlFor="hybrid" className="cursor-pointer">
-            Hybrid
-          </Label>
-        </div>
+        <Label className="text-base">{config.jobFilter.location.label}</Label>
+
+        {config.jobFilter.location.options?.map((option, index) => (
+          <div key={index} className="flex items-center space-x-2">
+            <Checkbox
+              className="h-4 w-4"
+              defaultChecked={locationArray?.includes(option.value)}
+              id={option.value}
+              onCheckedChange={() =>
+                dispatch(
+                  setAllJobsFilter({
+                    ...option,
+                    name: config.jobFilter.location.name,
+                  })
+                )
+              }
+            />
+            <Label htmlFor={option.value} className="cursor-pointer">
+              {option.label}
+            </Label>
+          </div>
+        ))}
       </div>
 
+      {/* Experience Filter */}
       <div className="grid w-full max-w-sm items-center gap-5 mt-7">
-        <Label className="text-base">Experience Level</Label>
-        <div className="flex items-center space-x-2">
-          <Switch id="0" className="h-5 w-10" />
-          <Label htmlFor="0" className="cursor-pointer">
-            Fresher
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="1" className="h-5 w-10" />
-          <Label htmlFor="1" className="cursor-pointer">
-            1 Year
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="2" className="h-5 w-10" />
-          <Label htmlFor="2" className="cursor-pointer">
-            2 Year
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="3" className="h-5 w-10" />
-          <Label htmlFor="3" className="cursor-pointer">
-            3 Year
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="4" className="h-5 w-10" />
-          <Label htmlFor="4" className="cursor-pointer">
-            4 Year
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch id="5" className="h-5 w-10" />
-          <Label htmlFor="5" className="cursor-pointer">
-            5 or ++
-          </Label>
-        </div>
+        <Label className="text-base">{config.jobFilter.experience.label}</Label>
+
+        {config.jobFilter.experience.options?.map((option, index) => (
+          <div key={index} className="flex items-center space-x-2">
+            <Switch
+              defaultChecked={experienceArray?.includes(option.value)}
+              id={option.value}
+              onCheckedChange={() =>
+                dispatch(
+                  setAllJobsFilter({
+                    ...option,
+                    name: config.jobFilter.experience.name,
+                  })
+                )
+              }
+              className="h-5 w-10"
+            />
+            <Label htmlFor={option.value} className="cursor-pointer">
+              {option.label}
+            </Label>
+          </div>
+        ))}
       </div>
     </div>
   );

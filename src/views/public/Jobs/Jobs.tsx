@@ -83,7 +83,7 @@ const Jobs = () => {
   } else if (!isLoading && isError) {
     content = <Error message="There was an error" />;
   } else if (!isLoading && !isError && jobData?.length === 0) {
-    <div>No job found</div>;
+    content = <div>No job found</div>;
   } else if (!isLoading && !isError && jobData?.length > 0) {
     content = (
       <div>
@@ -92,6 +92,7 @@ const Jobs = () => {
             <JobListCard key={job._id} job={job} />
           ))}
         </div>
+        {/* Pagination */}
         <div className="flex items-center justify-end space-x-6 lg:space-x-8 mt-10">
           <div className="flex items-center space-x-2">
             <p className="text-sm font-medium">Rows per page</p>
