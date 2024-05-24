@@ -1,4 +1,5 @@
 export const getBaseUrl = (): string => {
-  return process.env.PUBLIC_API_BASE_URL as string;
-  // return "https://talent-haven-server.vercel.app/api/v1" as string;
+  return (
+    import.meta.env.VITE_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1"
+  );
 };
