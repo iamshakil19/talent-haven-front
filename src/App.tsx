@@ -5,8 +5,6 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/routes";
 
 function App() {
-  console.log(import.meta.env.VITE_PUBLIC_API_BASE_URL);
-
   return (
     <>
       <Provider store={store}>
