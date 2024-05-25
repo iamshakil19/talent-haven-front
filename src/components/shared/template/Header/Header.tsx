@@ -13,6 +13,7 @@ import { Menu } from "lucide-react";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import appConfig from "@/config/app.config";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
@@ -36,7 +37,12 @@ const Header = () => {
       >
         <div className="hidden md:block">
           <Link to="/">
-            <img src="/logo.svg" alt="logo" title="Talent haven logo" />
+            <img
+              src={appConfig.logo}
+              alt="logo"
+              title="Talent haven logo"
+              className="w-48"
+            />
           </Link>
         </div>
 
@@ -58,10 +64,10 @@ const Header = () => {
               <Link to="/">
                 <SheetClose asChild>
                   <img
-                    src="/logo.svg"
+                    src={appConfig.logo}
                     alt="logo"
                     title="Talent haven logo"
-                    className="w-28"
+                    className="w-32"
                   />
                 </SheetClose>
               </Link>
@@ -95,10 +101,10 @@ const Header = () => {
         <div className="flex-1 flex justify-center">
           <Link to="/">
             <img
-              src="/logo.svg"
+              src={appConfig.logo}
               alt="logo"
               title="Talent haven logo"
-              className="md:hidden"
+              className="md:hidden w-36"
             />
           </Link>
         </div>

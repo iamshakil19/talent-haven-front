@@ -1,5 +1,7 @@
+import appConfig from "@/config/app.config";
+
 const staticText = {
-  logo: "/logo.svg",
+  logo: appConfig.logo,
   CallUs: "Call Us",
   phoneNumber: "123 456 789",
   address: "Mirpur, Dhaka, Bangladesh",

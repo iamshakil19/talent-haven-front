@@ -33,6 +33,7 @@ import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdNotificationsNone } from "react-icons/md";
 import { IoMailOpenOutline } from "react-icons/io5";
 import logout from "@/redux/features/auth/authActions";
+import appConfig from "@/config/app.config";
 
 const DashboardHeader = ({
   isCollapsed,
@@ -67,10 +68,10 @@ const DashboardHeader = ({
             <Link to="/">
               <SheetClose asChild>
                 <img
-                  src="/logo.svg"
+                  src={appConfig.logo}
                   alt="logo"
                   title="Talent haven logo"
-                  className="w-28"
+                  className="w-32"
                 />
               </SheetClose>
             </Link>

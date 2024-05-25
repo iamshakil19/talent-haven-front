@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { IoMdSettings } from "react-icons/io";
+import appConfig from "@/config/app.config";
 
 const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const navigate = useNavigate();
@@ -35,10 +36,10 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
             {!isCollapsed && (
               <Link to="/">
                 <img
-                  src="/logo.svg"
+                 src={appConfig.logo}
                   alt="logo"
                   title="Talent haven logo"
-                  className="w-28"
+                  className="w-32"
                 />
               </Link>
             )}

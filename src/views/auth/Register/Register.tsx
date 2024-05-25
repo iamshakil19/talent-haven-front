@@ -20,6 +20,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import AnimatedPageWrapper from "@/hoc";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import appConfig from "@/config/app.config";
 
 const Register = () => {
   const [register, { isLoading, isError, error }] = useRegisterMutation();
@@ -59,9 +60,9 @@ const Register = () => {
     <div className="h-screen relative bg-gradient-to-br from-[#F2F5FB] to-[#EAF0FB]">
       <img
         onClick={() => navigate("/")}
-        src="/public/logo.svg"
+        src={appConfig.logo}
         alt="Image"
-        className="absolute top-5 left-5 lg:grayscale lg:brightness-[10] cursor-pointer"
+        className="absolute w-48 top-5 left-5 lg:grayscale lg:brightness-[10] cursor-pointer"
       />
       <div className="w-full lg:grid lg:grid-cols-5">
         <div className="hidden bg-muted lg:block col-span-2">

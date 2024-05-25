@@ -12,7 +12,7 @@ const Footer = () => {
       <Container className="py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
           <div>
-            <img src={staticText.logo} alt="" />
+            <img src={staticText.logo} alt="" className="w-36" />
             <p className="mb-1 mt-6 text-lg">{staticText.CallUs}</p>
             <Link to="" className="text-lg text-primary-blue block">
               {staticText.phoneNumber}

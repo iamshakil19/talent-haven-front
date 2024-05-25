@@ -1,4 +1,5 @@
 export type TAppConfig = {
+  logo: string;
   apiPrefix: string;
   authenticatedEntryPath: string;
   unAuthenticatedEntryPath: string;
@@ -6,6 +7,7 @@ export type TAppConfig = {
 };
 
 const appConfig: TAppConfig = {
+  logo: "/logo.png",
   apiPrefix: "/api",
   authenticatedEntryPath: "/dashboard",
   unAuthenticatedEntryPath: "/login",
