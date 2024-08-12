@@ -5,9 +5,9 @@ const MainLayout = () => {
   return (
     <div>
       <div className="sticky top-0 z-50">
-        <p className="bg-muted-foreground text-center text-background py-1">
+        {/* <p className="bg-muted-foreground text-center text-background py-1">
           🚧 SITE STILL UNDER DEVELOPMENT 🚧
-        </p>
+        </p> */}
         <Header />
       </div>
       <div>

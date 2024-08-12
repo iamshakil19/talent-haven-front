@@ -40,6 +40,7 @@ const DashboardHeader = ({
   setCollapsed,
 }: {
   isCollapsed: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setCollapsed: any;
 }) => {
   const dispatch: Dispatch = useAppDispatch();
